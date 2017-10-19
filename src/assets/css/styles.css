@@ -89,7 +89,7 @@ label {
 .menu li {
   color: #fff;
   font-family: 'Boogaloo', cursive;
-  font-family: 400;
+  font-weight: 400;
   font-size: 30px;
   line-height: 38px;
   position: relative;
@@ -116,4 +116,8 @@ form a {
 
 .bottom-bar-right {
   float: right;
+}
+
+.top-bar-right .menu li a {
+  left: 20px;
 }
