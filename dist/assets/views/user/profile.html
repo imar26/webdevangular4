@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
+	<title>Profile</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="UTF-8">
 	<!-- Foundation CSS -->
@@ -21,32 +21,57 @@
 	<link rel="stylesheet" type="text/css" href="../../css/styles.css">
 </head>
 <body>
+	<header>
+		<div class="top-bar">
+			<div class="top-bar-left">
+				<ul class="menu">
+					<li>
+						<a href="/assets/views/user/login.html"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+						Profile
+					</li>
+				</ul>
+			</div>
+		</div>
+	</header>
 	<div class="grid-container">
 		<div class="grid-x grid-padding-x">
 			<div class="large-12 cell">
-				<div class="login">
+				<div class="stdPadding">
 					<div class="callout">
-						<h2>Log In</h2>
-						<hr>
 						<form method="post" id="loginForm">
 							<div class="grid-x grid-padding-x">
 								<div class="large-12 cell">
 									<label>Username</label>
-									<input type="text" placeholder="username" />
+									<input type="text" value="jannunzi" />
 								</div>
 							</div>
 							<div class="grid-x grid-padding-x">
 								<div class="large-12 cell">
-									<label>Password</label>
-									<input type="password" placeholder="password" />
+									<label>Email</label>
+									<input type="email" value="jannunzi@gmail.com" />
+								</div>
+							</div>
+							<div class="grid-x grid-padding-x">
+								<div class="large-12 cell">
+									<label>First Name</label>
+									<input type="text" value="Jose" />
+								</div>
+							</div>
+							<div class="grid-x grid-padding-x">
+								<div class="large-12 cell">
+									<label>Last Name</label>
+									<input type="text" value="Annunziato" />
 								</div>
 							</div>
 							<div class="grid-x grid-padding-x">
 								<div class="large-2 medium-2 cell">
-									<a href="/assets/views/user/profile.html" class="button customBtnColor">Login</a>
+									<a href="/assets/views/user/profile.html" class="button customBtnColor">Update Profile</a>
 								</div>
 								<div class="large-2 medium-2 cell">
-									<a href="/assets/views/user/register.html" class="button customBtnColor">Register</a>
+									<a href="/assets/views/user/website-list.html" class="button customBtnColor">Websites</a>
+								</div>
+								<div class="large-2 medium-2 cell">
+									<a href="/assets/views/user/login.html" class="button customBtnColor">Logout</a>
 								</div>
 							</div>
 						</form>
@@ -55,5 +80,16 @@
 			</div>
 		</div>		
 	</div>
+	<footer>
+		<div class="bottom-bar">
+			<div class="bottom-bar-right">
+				<ul class="menu">
+					<li>
+						<a href="/assets/views/user/profile.html"><i class="fa fa-user" aria-hidden="true"></i></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
