@@ -95,6 +95,10 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_widget_widget_edit_widget_header_widget_header_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-header/widget-header.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_widget_widget_edit_widget_image_widget_image_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/widget-image.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_widget_widget_edit_widget_youtube_widget_youtube_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-youtube/widget-youtube.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_widget_widget_new_widget_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-new.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_widget_widget_new_widget_header_new_widget_header_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_widget_widget_new_widget_image_new_widget_image_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_widget_widget_new_widget_youtube_new_widget_youtube_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -116,6 +120,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // import { TodoEditComponent } from './todo-list/todo-edit.component';
 // import {TodoService} from './services/todo.service.client';
 // import {WebsiteService} from './services/website.service.client';
+
+
+
+
 
 
 
@@ -160,7 +168,11 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_17__components_widget_widget_list_widget_list_component__["a" /* WidgetListComponent */],
             __WEBPACK_IMPORTED_MODULE_18__components_widget_widget_edit_widget_header_widget_header_component__["a" /* WidgetHeaderComponent */],
             __WEBPACK_IMPORTED_MODULE_19__components_widget_widget_edit_widget_image_widget_image_component__["a" /* WidgetImageComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__components_widget_widget_edit_widget_youtube_widget_youtube_component__["a" /* WidgetYoutubeComponent */]
+            __WEBPACK_IMPORTED_MODULE_20__components_widget_widget_edit_widget_youtube_widget_youtube_component__["a" /* WidgetYoutubeComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__components_widget_widget_new_widget_new_component__["a" /* WidgetNewComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__components_widget_widget_new_widget_header_new_widget_header_new_component__["a" /* WidgetHeaderNewComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__components_widget_widget_new_widget_image_new_widget_image_new_component__["a" /* WidgetImageNewComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__components_widget_widget_new_widget_youtube_new_widget_youtube_new_component__["a" /* WidgetYoutubeNewComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -195,6 +207,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_widget_widget_list_widget_list_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-list/widget-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_widget_widget_edit_widget_edit_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_widget_widget_chooser_widget_chooser_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-chooser/widget-chooser.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_widget_widget_new_widget_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-new.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Routing; });
 
 // import {TestComponent} from './components/test/test.component';
@@ -216,6 +229,7 @@ AppModule = __decorate([
 
 
 
+
 var APP_ROUTES = [
     // {path: '', component : HomeComponent},
     // {path: 'todo', component : TodoComponent},
@@ -233,6 +247,7 @@ var APP_ROUTES = [
     { path: 'user/:userId/website/:websiteId/page/:pageId', component: __WEBPACK_IMPORTED_MODULE_8__components_page_page_edit_page_edit_component__["a" /* PageEditComponent */] },
     { path: 'user/:userId/website/:websiteId/page/:pageId/widget', component: __WEBPACK_IMPORTED_MODULE_10__components_widget_widget_list_widget_list_component__["a" /* WidgetListComponent */] },
     { path: 'user/:userId/website/:websiteId/page/:pageId/widget/choose', component: __WEBPACK_IMPORTED_MODULE_12__components_widget_widget_chooser_widget_chooser_component__["a" /* WidgetChooserComponent */] },
+    { path: 'user/:userId/website/:websiteId/page/:pageId/widget/new/:widgetType', component: __WEBPACK_IMPORTED_MODULE_13__components_widget_widget_new_widget_new_component__["a" /* WidgetNewComponent */] },
     { path: 'user/:userId/website/:websiteId/page/:pageId/widget/:widgetId', component: __WEBPACK_IMPORTED_MODULE_11__components_widget_widget_edit_widget_edit_component__["a" /* WidgetEditComponent */] }
 ];
 // Export the routes as module providers
@@ -506,7 +521,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n\t<div class=\"top-bar\">\n\t\t<div class=\"top-bar-left\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\t<a routerLink=\"/login\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a>\n\t\t\t\t\tProfile\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</header>\n<div class=\"grid-container\">\n\t<div class=\"grid-x grid-padding-x\">\n\t\t<div class=\"large-12 cell\">\n\t\t\t<div class=\"stdPadding\">\n\t\t\t\t<div class=\"callout\">\n\t\t\t\t\t<form method=\"post\" id=\"profileForm\">\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Username</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"jannunzi\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Email</label>\n\t\t\t\t\t\t\t\t<input type=\"email\" value=\"jannunzi@gmail.com\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>First Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Jose\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Last Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Annunziato\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/user/123\" class=\"button customBtnColor\">Update Profile</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/user/123/website\" class=\"button customBtnColor\">Websites</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/login\" class=\"button customBtnColor\">Logout</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\t\t\n</div>\n<footer>\n\t<div class=\"bottom-bar\">\n\t\t<div class=\"bottom-bar-right\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\t<a routerLink=\"/profile\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</footer>"
+module.exports = "<header>\n\t<div class=\"top-bar profile\">\n\t\t<div class=\"top-bar-left\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\tProfile\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</header>\n<div class=\"grid-container\">\n\t<div class=\"grid-x grid-padding-x\">\n\t\t<div class=\"large-12 cell\">\n\t\t\t<div class=\"stdPadding\">\n\t\t\t\t<div class=\"callout\">\n\t\t\t\t\t<form method=\"post\" id=\"profileForm\">\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Username</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"jannunzi\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Email</label>\n\t\t\t\t\t\t\t\t<input type=\"email\" value=\"jannunzi@gmail.com\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>First Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Jose\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Last Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Annunziato\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/user/123\" class=\"button customBtnColor\">Update Profile</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/user/123/website\" class=\"button customBtnColor\">Websites</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/login\" class=\"button customBtnColor\">Logout</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\t\t\n</div>\n<footer>\n\t<div class=\"bottom-bar\">\n\t\t<div class=\"bottom-bar-right\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\t<a routerLink=\"/profile\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</footer>"
 
 /***/ }),
 
@@ -1153,6 +1168,250 @@ WidgetListComponent = __decorate([
 ], WidgetListComponent);
 
 //# sourceMappingURL=widget-list.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  widget-header-new works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetHeaderNewComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var WidgetHeaderNewComponent = (function () {
+    function WidgetHeaderNewComponent() {
+    }
+    WidgetHeaderNewComponent.prototype.ngOnInit = function () {
+    };
+    return WidgetHeaderNewComponent;
+}());
+WidgetHeaderNewComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-widget-header-new',
+        template: __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], WidgetHeaderNewComponent);
+
+//# sourceMappingURL=widget-header-new.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  widget-image-new works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetImageNewComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var WidgetImageNewComponent = (function () {
+    function WidgetImageNewComponent() {
+    }
+    WidgetImageNewComponent.prototype.ngOnInit = function () {
+    };
+    return WidgetImageNewComponent;
+}());
+WidgetImageNewComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-widget-image-new',
+        template: __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], WidgetImageNewComponent);
+
+//# sourceMappingURL=widget-image-new.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-new.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-new.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  widget-new works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-new.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetNewComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var WidgetNewComponent = (function () {
+    function WidgetNewComponent() {
+    }
+    WidgetNewComponent.prototype.ngOnInit = function () {
+    };
+    return WidgetNewComponent;
+}());
+WidgetNewComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-widget-new',
+        template: __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-new.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/widget/widget-new/widget-new.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], WidgetNewComponent);
+
+//# sourceMappingURL=widget-new.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  widget-youtube-new works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetYoutubeNewComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var WidgetYoutubeNewComponent = (function () {
+    function WidgetYoutubeNewComponent() {
+    }
+    WidgetYoutubeNewComponent.prototype.ngOnInit = function () {
+    };
+    return WidgetYoutubeNewComponent;
+}());
+WidgetYoutubeNewComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
+        selector: 'app-widget-youtube-new',
+        template: __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], WidgetYoutubeNewComponent);
+
+//# sourceMappingURL=widget-youtube-new.component.js.map
 
 /***/ }),
 
