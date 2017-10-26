@@ -21,6 +21,7 @@ import { PageNewComponent } from './components/page/page-new/page-new.component'
 import { WidgetListComponent } from './components/widget/widget-list/widget-list.component';
 import { WidgetEditComponent } from './components/widget/widget-edit/widget-edit.component';
 import { WidgetChooserComponent } from './components/widget/widget-chooser/widget-chooser.component';
+import { WidgetNewComponent } from './components/widget/widget-new/widget-new.component';
 
 const APP_ROUTES: Routes = [
   // {path: '', component : HomeComponent},
@@ -39,6 +40,7 @@ const APP_ROUTES: Routes = [
   {path: 'user/:userId/website/:websiteId/page/:pageId', component: PageEditComponent},
   {path: 'user/:userId/website/:websiteId/page/:pageId/widget', component: WidgetListComponent},
   {path: 'user/:userId/website/:websiteId/page/:pageId/widget/choose', component: WidgetChooserComponent},
+  {path: 'user/:userId/website/:websiteId/page/:pageId/widget/new/:widgetType', component: WidgetNewComponent},
   {path: 'user/:userId/website/:websiteId/page/:pageId/widget/:widgetId', component: WidgetEditComponent}
 ];
 

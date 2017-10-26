@@ -70,6 +70,10 @@ label {
   z-index: 1;
 }
 
+.top-bar.profile {
+  padding: 20px 15px;
+}
+
 .bottom-bar {
   padding: 30px 10px;
   position: fixed;

@@ -28,6 +28,10 @@ import { WidgetListComponent } from './components/widget/widget-list/widget-list
 import { WidgetHeaderComponent } from './components/widget/widget-edit/widget-header/widget-header.component';
 import { WidgetImageComponent } from './components/widget/widget-edit/widget-image/widget-image.component';
 import { WidgetYoutubeComponent } from './components/widget/widget-edit/widget-youtube/widget-youtube.component';
+import { WidgetNewComponent } from './components/widget/widget-new/widget-new.component';
+import { WidgetHeaderNewComponent } from './components/widget/widget-new/widget-header-new/widget-header-new.component';
+import { WidgetImageNewComponent } from './components/widget/widget-new/widget-image-new/widget-image-new.component';
+import { WidgetYoutubeNewComponent } from './components/widget/widget-new/widget-youtube-new/widget-youtube-new.component';
 
 @NgModule({
   // Declare components here
@@ -52,7 +56,11 @@ import { WidgetYoutubeComponent } from './components/widget/widget-edit/widget-y
     WidgetListComponent,
     WidgetHeaderComponent,
     WidgetImageComponent,
-    WidgetYoutubeComponent
+    WidgetYoutubeComponent,
+    WidgetNewComponent,
+    WidgetHeaderNewComponent,
+    WidgetImageNewComponent,
+    WidgetYoutubeNewComponent
   ],
   imports: [
     BrowserModule,
