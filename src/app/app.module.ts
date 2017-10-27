@@ -33,6 +33,12 @@ import { WidgetHeaderNewComponent } from './components/widget/widget-new/widget-
 import { WidgetImageNewComponent } from './components/widget/widget-new/widget-image-new/widget-image-new.component';
 import { WidgetYoutubeNewComponent } from './components/widget/widget-new/widget-youtube-new/widget-youtube-new.component';
 
+// Services
+import { UserService } from './services/user.service.client';
+import { WebsiteService } from './services/website.service.client';
+import { PageService } from './services/page.service.client';
+import { WidgetService } from './services/widget.service.client';
+
 @NgModule({
   // Declare components here
   declarations: [
@@ -69,7 +75,7 @@ import { WidgetYoutubeNewComponent } from './components/widget/widget-new/widget
     Routing
   ],
   // Client Side services here
-  providers: [],
+  providers: [UserService, WebsiteService, PageService, WidgetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

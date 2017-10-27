@@ -99,6 +99,10 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_widget_widget_new_widget_header_new_widget_header_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-header-new/widget-header-new.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_widget_widget_new_widget_image_new_widget_image_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-image-new/widget-image-new.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_widget_widget_new_widget_youtube_new_widget_youtube_new_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-new/widget-youtube-new/widget-youtube-new.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_website_service_client__ = __webpack_require__("../../../../../src/app/services/website.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__services_page_service_client__ = __webpack_require__("../../../../../src/app/services/page.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__services_widget_service_client__ = __webpack_require__("../../../../../src/app/services/widget.service.client.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -135,6 +139,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
+
+// Services
 
 
 
@@ -181,7 +190,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__app_routing__["a" /* Routing */]
         ],
         // Client Side services here
-        providers: [],
+        providers: [__WEBPACK_IMPORTED_MODULE_25__services_user_service_client__["a" /* UserService */], __WEBPACK_IMPORTED_MODULE_26__services_website_service_client__["a" /* WebsiteService */], __WEBPACK_IMPORTED_MODULE_27__services_page_service_client__["a" /* PageService */], __WEBPACK_IMPORTED_MODULE_28__services_widget_service_client__["a" /* WidgetService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -1412,6 +1421,325 @@ WidgetYoutubeNewComponent = __decorate([
 ], WidgetYoutubeNewComponent);
 
 //# sourceMappingURL=widget-youtube-new.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/page.service.client.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+// injecting service into module
+var PageService = (function () {
+    function PageService() {
+        this.api = {
+            'createPage': this.createPage,
+            'findPageByWebsiteId': this.findPageByWebsiteId,
+            'findPageById': this.findPageById,
+            'updatePage': this.updatePage,
+            'deletePage': this.deletePage
+        };
+    }
+    PageService.prototype.createPage = function (websiteId, page) {
+        page._id = Math.random();
+        page.websiteId = websiteId;
+        this.pages.push(page);
+        return page;
+    };
+    PageService.prototype.findPageByWebsiteId = function (websiteId) {
+        for (var x = 0; x < this.pages.length; x++) {
+            if (this.pages[x].websiteId === websiteId) {
+                return this.pages[x];
+            }
+        }
+    };
+    PageService.prototype.findPageById = function (pageId) {
+        for (var x = 0; x < this.pages.length; x++) {
+            if (this.pages[x]._id === pageId) {
+                return this.pages[x];
+            }
+        }
+    };
+    PageService.prototype.updatePage = function (pageId, page) {
+        for (var x = 0; x < this.pages.length; x++) {
+            if (this.pages[x]._id === pageId) {
+                this.pages[x].name = page.name;
+                this.pages[x].description = page.description;
+            }
+            return this.pages[x];
+        }
+    };
+    PageService.prototype.deletePage = function (pageId) {
+        for (var x = 0; x < this.pages.length; x++) {
+            if (this.pages[x]._id === pageId) {
+                this.pages.splice(x, 1);
+                return true;
+            }
+        }
+    };
+    return PageService;
+}());
+PageService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+], PageService);
+
+//# sourceMappingURL=page.service.client.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/user.service.client.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+// injecting service into module
+var UserService = (function () {
+    function UserService() {
+        this.users = [
+            { _id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder" },
+            { _id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley" },
+            { _id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia" },
+            { _id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi" }
+        ];
+        this.api = {
+            'createUser': this.createUser,
+            'findUserById': this.findUserById,
+            'findUserByUsername': this.findUserByUsername,
+            'findUserByCredentials': this.findUserByCredentials,
+            'updateUser': this.updateUser,
+            'deleteUser': this.deleteUser
+        };
+    }
+    UserService.prototype.createUser = function (user) {
+        user._id = Math.random();
+        this.users.push(user);
+        return user;
+    };
+    UserService.prototype.findUserById = function (userId) {
+        for (var x = 0; x < this.users.length; x++) {
+            if (this.users[x]._id === userId) {
+                return this.users[x];
+            }
+        }
+    };
+    UserService.prototype.findUserByUsername = function (username) {
+        for (var x = 0; x < this.users.length; x++) {
+            if (this.users[x].username === username) {
+                return this.users[x];
+            }
+        }
+    };
+    UserService.prototype.findUserByCredentials = function (username, password) {
+        for (var x = 0; x < this.users.length; x++) {
+            if (this.users[x].username === username && this.users[x].password === password) {
+                return this.users[x];
+            }
+        }
+    };
+    UserService.prototype.updateUser = function (userId, user) {
+        for (var x = 0; x < this.users.length; x++) {
+            if (this.users[x]._id === userId) {
+                this.users[x].firstName = user.firstName;
+                this.users[x].lastName = user.lastName;
+            }
+            return this.users[x];
+        }
+    };
+    UserService.prototype.deleteUser = function (userId) {
+        for (var x = 0; x < this.users.length; x++) {
+            if (this.users[x]._id === userId) {
+                this.users.splice(x, 1);
+                return true;
+            }
+        }
+    };
+    return UserService;
+}());
+UserService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+], UserService);
+
+//# sourceMappingURL=user.service.client.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/website.service.client.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsiteService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+// injecting service into module
+var WebsiteService = (function () {
+    function WebsiteService() {
+        this.api = {
+            'createWebsite': this.createWebsite,
+            'findWebsitesByUser': this.findWebsitesByUser,
+            'findWebsiteById': this.findWebsiteById,
+            'updateWebsite': this.updateWebsite,
+            'deleteWebsite': this.deleteWebsite
+        };
+    }
+    WebsiteService.prototype.createWebsite = function (userId, website) {
+        website._id = Math.random();
+        website.developerId = userId;
+        this.websites.push(website);
+        return website;
+    };
+    WebsiteService.prototype.findWebsitesByUser = function (userId) {
+        for (var x = 0; x < this.websites.length; x++) {
+            if (this.websites[x].developerId === userId) {
+                return this.websites[x];
+            }
+        }
+    };
+    WebsiteService.prototype.findWebsiteById = function (websiteId) {
+        for (var x = 0; x < this.websites.length; x++) {
+            if (this.websites[x]._id === websiteId) {
+                return this.websites[x];
+            }
+        }
+    };
+    WebsiteService.prototype.updateWebsite = function (websiteId, website) {
+        for (var x = 0; x < this.websites.length; x++) {
+            if (this.websites[x]._id === websiteId) {
+                this.websites[x].name = website.name;
+                this.websites[x].description = website.description;
+            }
+            return this.websites[x];
+        }
+    };
+    WebsiteService.prototype.deleteWebsite = function (websiteId) {
+        for (var x = 0; x < this.websites.length; x++) {
+            if (this.websites[x]._id === websiteId) {
+                this.websites.splice(x, 1);
+                return true;
+            }
+        }
+    };
+    return WebsiteService;
+}());
+WebsiteService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+], WebsiteService);
+
+//# sourceMappingURL=website.service.client.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/widget.service.client.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+// injecting service into module
+var WidgetService = (function () {
+    function WidgetService() {
+        this.api = {
+            'createWidget': this.createWidget,
+            'findWidgetsByPageId': this.findWidgetsByPageId,
+            'findWidgetById': this.findWidgetById,
+            'updateWidget': this.updateWidget,
+            'deleteWidget': this.deleteWidget
+        };
+    }
+    WidgetService.prototype.createWidget = function (pageId, widget) {
+        widget._id = Math.random();
+        widget.pageId = pageId;
+        this.widgets.push(widget);
+        return widget;
+    };
+    WidgetService.prototype.findWidgetsByPageId = function (pageId) {
+        for (var x = 0; x < this.widgets.length; x++) {
+            if (this.widgets[x].pageId === pageId) {
+                return this.widgets[x];
+            }
+        }
+    };
+    WidgetService.prototype.findWidgetById = function (widgetId) {
+        for (var x = 0; x < this.widgets.length; x++) {
+            if (this.widgets[x]._id === widgetId) {
+                return this.widgets[x];
+            }
+        }
+    };
+    WidgetService.prototype.updateWidget = function (widgetId, widget) {
+        for (var x = 0; x < this.widgets.length; x++) {
+            if (this.widgets[x]._id === widgetId) {
+                // if(this.widgets[x].widgetType == 'HEADING') {
+                // 	this.widgets[x].text = widget.text;
+                // 	this.widgets[x].size = widget.size;
+                // } else if(this.widgets[x].widgetType == 'HTML') {
+                // 	this.widgets[x].text = widget.text;
+                // } else if(this.widgets[x].widgetType == 'IMAGE') {
+                // 	this.widgets[x].width = widget.width;					
+                // 	this.widgets[x].url = widget.url;					
+                // } else if(this.widgets[x].widgetType == 'YOUTUBE') {
+                // 	this.widgets[x].width = widget.width;					
+                // 	this.widgets[x].url = widget.url;
+                // }
+            }
+            return this.widgets[x];
+        }
+    };
+    WidgetService.prototype.deleteWidget = function (widgetId) {
+        for (var x = 0; x < this.widgets.length; x++) {
+            if (this.widgets[x]._id === widgetId) {
+                this.widgets.splice(x, 1);
+                return true;
+            }
+        }
+    };
+    return WidgetService;
+}());
+WidgetService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+], WidgetService);
+
+//# sourceMappingURL=widget.service.client.js.map
 
 /***/ }),
 
