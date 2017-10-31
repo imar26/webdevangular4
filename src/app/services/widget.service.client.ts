@@ -9,13 +9,13 @@ import { Router } from '@angular/router';
 
 export class WidgetService {
 	widgets: [
-	 	{ "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-	 	{ "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-	 	{ "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%", "url": "http://lorempixel.com/400/200/"},
-	 	{ "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-	 	{ "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-	 	{ "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E" },
-	 	{ "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+	 	{ "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO", "width": null, "url": null},
+	 	{ "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum", "width": null, "url": null},
+	 	{ "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%", "url": "http://lorempixel.com/400/200/", "size": null, "text": null},
+	 	{ "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>", "width": null, "url": null, "size": null},
+	 	{ "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum", "width": null, "url": null},
+	 	{ "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E", "size": null, "text": null},
+	 	{ "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>", "width": null, "url": null, "size": null}
 	];
 
 	api = {
@@ -52,18 +52,20 @@ export class WidgetService {
 	updateWidget(widgetId: string, widget: any) {
 		for (let x=0; x < this.widgets.length; x++) {
 			if(this.widgets[x]._id === widgetId) {
-				// if(this.widgets[x].widgetType == 'HEADING') {
-				// 	this.widgets[x].text = widget.text;
-				// 	this.widgets[x].size = widget.size;
-				// } else if(this.widgets[x].widgetType == 'HTML') {
-				// 	this.widgets[x].text = widget.text;
-				// } else if(this.widgets[x].widgetType == 'IMAGE') {
-				// 	this.widgets[x].width = widget.width;					
-				// 	this.widgets[x].url = widget.url;					
-				// } else if(this.widgets[x].widgetType == 'YOUTUBE') {
-				// 	this.widgets[x].width = widget.width;					
-				// 	this.widgets[x].url = widget.url;
-				// }
+				if(this.widgets[x].widgetType == 'HEADING') {
+					this.widgets[x].text = widget.text;
+					this.widgets[x].size = widget.size;
+					this.widgets[x].width = null;					
+					this.widgets[x].url = null;
+				} else if(this.widgets[x].widgetType == 'HTML') {
+					this.widgets[x].text = widget.text;
+				} else if(this.widgets[x].widgetType == 'IMAGE') {
+					this.widgets[x].width = widget.width;					
+					this.widgets[x].url = widget.url;					
+				} else if(this.widgets[x].widgetType == 'YOUTUBE') {
+					this.widgets[x].width = widget.width;					
+					this.widgets[x].url = widget.url;
+				}
 			}
 			return this.widgets[x];
 		}
