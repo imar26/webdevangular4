@@ -1709,18 +1709,23 @@ var WidgetService = (function () {
     WidgetService.prototype.updateWidget = function (widgetId, widget) {
         for (var x = 0; x < this.widgets.length; x++) {
             if (this.widgets[x]._id === widgetId) {
-                // if(this.widgets[x].widgetType == 'HEADING') {
-                // 	this.widgets[x].text = widget.text;
-                // 	this.widgets[x].size = widget.size;
-                // } else if(this.widgets[x].widgetType == 'HTML') {
-                // 	this.widgets[x].text = widget.text;
-                // } else if(this.widgets[x].widgetType == 'IMAGE') {
-                // 	this.widgets[x].width = widget.width;					
-                // 	this.widgets[x].url = widget.url;					
-                // } else if(this.widgets[x].widgetType == 'YOUTUBE') {
-                // 	this.widgets[x].width = widget.width;					
-                // 	this.widgets[x].url = widget.url;
-                // }
+                if (this.widgets[x].widgetType == 'HEADING') {
+                    this.widgets[x].text = widget.text;
+                    this.widgets[x].size = widget.size;
+                    this.widgets[x].width = null;
+                    this.widgets[x].url = null;
+                }
+                else if (this.widgets[x].widgetType == 'HTML') {
+                    this.widgets[x].text = widget.text;
+                }
+                else if (this.widgets[x].widgetType == 'IMAGE') {
+                    this.widgets[x].width = widget.width;
+                    this.widgets[x].url = widget.url;
+                }
+                else if (this.widgets[x].widgetType == 'YOUTUBE') {
+                    this.widgets[x].width = widget.width;
+                    this.widgets[x].url = widget.url;
+                }
             }
             return this.widgets[x];
         }
