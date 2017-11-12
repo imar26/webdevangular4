@@ -3,14 +3,14 @@
     <div class="top-bar-left">
       <ul class="menu">
         <li>
-          <a routerLink="/user/123"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Websites
+          <a routerLink="/user/{{userId}}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Websites
         </li>
       </ul>
     </div>
     <div class="top-bar-right">
       <ul class="menu text-right">
         <li>
-          <a routerLink="/user/123/website/new"><i class="fa fa-plus" aria-hidden="true"></i></a>
+          <a routerLink="/user/{{userId}}/website/new"><i class="fa fa-plus" aria-hidden="true"></i></a>
         </li>
       </ul>
     </div>
@@ -35,60 +35,18 @@
               <h3>Action</h3>
             </div>
           </div>
-          <div class="grid-x grid-padding-x">
+          <div class="grid-x grid-padding-x" *ngFor="let website of websites">
             <div class="large-3 cell">
-              <p><a routerLink="/user/123/website/123/page">Address Book App</a></p>
+              <p><a routerLink="/user/{{website.developerId}}/website/{{website._id}}/page">{{website.name}}</a></p>
             </div>
             <div class="large-3 cell">
-              <p>1/2/2017</p>
+              <p>{{website.createdOn | date:'shortDate'}}</p>
             </div>
             <div class="large-3 cell">
-              <p>Aadesh Randeria</p>
+              <p>{{user.firstName}} {{user.lastName}}</p>
             </div>
             <div class="large-3 cell clearfix text-right">
-              <a routerLink="/user/123/website/123"><i class="fa fa-cog" aria-hidden="true"></i></a>
-            </div>
-          </div>
-          <div class="grid-x grid-padding-x">
-            <div class="large-3 cell">
-              <p><a routerLink="/user/123/website/123/page">Blogger</a></p>
-            </div>
-            <div class="large-3 cell">
-              <p>1/2/2017</p>
-            </div>
-            <div class="large-3 cell">
-              <p>Aadesh Randeria</p>
-            </div>
-            <div class="large-3 cell clearfix text-right">
-              <a routerLink="/user/123/website/123"><i class="fa fa-cog" aria-hidden="true"></i></a>
-            </div>
-          </div>
-          <div class="grid-x grid-padding-x">
-            <div class="large-3 cell">
-              <p><a routerLink="/user/123/website/123/page">Blogging App</a></p>
-            </div>
-            <div class="large-3 cell">
-              <p>1/2/2017</p>
-            </div>
-            <div class="large-3 cell">
-              <p>Aadesh Randeria</p>
-            </div>
-            <div class="large-3 cell clearfix text-right">
-              <a routerLink="/user/123/website/123"><i class="fa fa-cog" aria-hidden="true"></i></a>
-            </div>
-          </div>
-          <div class="grid-x grid-padding-x">
-            <div class="large-3 cell">
-              <p><a routerLink="/user/123/website/123/page">Script Testing App</a></p>
-            </div>
-            <div class="large-3 cell">
-              <p>1/2/2017</p>
-            </div>
-            <div class="large-3 cell">
-              <p>Aadesh Randeria</p>
-            </div>
-            <div class="large-3 cell clearfix text-right">
-              <a routerLink="/user/123/website/123"><i class="fa fa-cog" aria-hidden="true"></i></a>
+              <a routerLink="/user/{{website.developerId}}/website/{{website._id}}"><i class="fa fa-cog" aria-hidden="true"></i></a>
             </div>
           </div>
         </div>
@@ -101,7 +59,7 @@
     <div class="bottom-bar-right">
       <ul class="menu">
         <li>
-          <a routerLink="/user/123"><i class="fa fa-user" aria-hidden="true"></i></a>
+          <a routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
         </li>
       </ul>
     </div>

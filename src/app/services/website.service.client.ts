@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class WebsiteService {
-	websites: [
-	  	{ "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem" },
-	  	{ "_id": "234", "name": "Tweeter",     "developerId": "456", "description": "Lorem" },
-	  	{ "_id": "456", "name": "Gizmodo",     "developerId": "456", "description": "Lorem" },
-	  	{ "_id": "890", "name": "Go",          "developerId": "123", "description": "Lorem" },
-	  	{ "_id": "567", "name": "Tic Tac Toe", "developerId": "123", "description": "Lorem" },
-	  	{ "_id": "678", "name": "Checkers",    "developerId": "123", "description": "Lorem" },
-	  	{ "_id": "789", "name": "Chess",       "developerId": "234", "description": "Lorem" }
+	websites = [
+	  	{ "_id": "123", "name": "Facebook", "developerId": "456", "description": "Lorem", "createdOn": "1/2/2017" },
+	  	{ "_id": "234", "name": "Tweeter", "developerId": "456", "description": "Lorem", "createdOn": "1/2/2017" },
+	  	{ "_id": "456", "name": "Gizmodo", "developerId": "456", "description": "Lorem", "createdOn": "1/2/2017" },
+	  	{ "_id": "890", "name": "Go", "developerId": "123", "description": "Lorem", "createdOn": "1/2/2017" },
+	  	{ "_id": "567", "name": "Tic Tac Toe", "developerId": "123", "description": "Lorem", "createdOn": "1/2/2017" },
+	  	{ "_id": "678", "name": "Checkers", "developerId": "123", "description": "Lorem", "createdOn": "1/2/2017" },
+	  	{ "_id": "789", "name": "Chess", "developerId": "234", "description": "Lorem", "createdOn": "1/2/2017" }
 	];
 
 	api = {
@@ -27,18 +27,22 @@ export class WebsiteService {
 	};
 
 	createWebsite(userId: string, website: any) {
-		website._id = Math.random();
+		let length = this.websites.length;
+		website._id = (length + 1).toString();
 		website.developerId = userId;
+		website.createdOn = Date.now();
 		this.websites.push(website);
 		return website;
 	}
 
 	findWebsitesByUser(userId: string) {
+		var listWebsites = [];
 		for (let x=0; x < this.websites.length; x++) {
 			if(this.websites[x].developerId === userId) {
-				return this.websites[x];
+				listWebsites.push(this.websites[x]);				
 			}
 		}
+		return listWebsites;		
 	}
 
 	findWebsiteById(websiteId: string) {
@@ -54,8 +58,8 @@ export class WebsiteService {
 			if(this.websites[x]._id === websiteId) {
 				this.websites[x].name = website.name;
 				this.websites[x].description = website.description;
+				return this.websites[x];
 			}
-			return this.websites[x];
 		}
 	}
 
