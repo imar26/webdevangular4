@@ -3,7 +3,7 @@
     <div class="top-bar-left">
       <ul class="menu">
         <li>
-          <a routerLink="/user/123/website/123/page"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> New Page
+          <a routerLink="/user/{{userId}}/website/{{websiteId}}/page"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> New Page
         </li>
       </ul>
     </div>
@@ -14,22 +14,23 @@
     <div class="large-12 cell">
       <div class="stdPadding">
         <div class="callout">
-          <form method="post" id="newPageForm">
+          <form (ngSubmit)="createPage()" #f="ngForm">
             <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
+              <div class="large-12 cell field">
                 <label>Name</label>
-                <input type="text" placeholder="Page Name" />
+                <input type="text" placeholder="Page Name" name="name" ngModel #name="ngModel" required />
+                <span class="help-block" *ngIf="!name.valid && name.touched">Please enter name!</span>
               </div>
             </div>
             <div class="grid-x grid-padding-x">
               <div class="large-12 cell">
-                <label>Title</label>
-                <input type="text" placeholder="Page Title" />
+                <label>Description</label>
+                <textarea rows="3" placeholder="Description" name="description" ngModel #description="ngModel"></textarea>
               </div>
             </div>
             <div class="grid-x grid-padding-x">
               <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page" class="button customBtnColor">Add Page</a>
+                <button type="submit" [disabled]="!f.valid" class="button customBtnColor">Add Page</button>
               </div>
             </div>
           </form>
@@ -43,7 +44,7 @@
     <div class="bottom-bar-right">
       <ul class="menu">
         <li>
-          <a routerLink="/user/123"><i class="fa fa-user" aria-hidden="true"></i></a>
+          <a routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
         </li>
       </ul>
     </div>

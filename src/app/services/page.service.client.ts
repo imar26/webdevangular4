@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class PageService {
-	pages: [
+	pages = [
 	  	{ "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
 	  	{ "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
 	  	{ "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
@@ -23,18 +23,21 @@ export class PageService {
 	};
 
 	createPage(websiteId: string, page: any) {
-		page._id = Math.random();
+		let length = this.pages.length;
+		page._id = (length + 1).toString();
 		page.websiteId = websiteId;
 		this.pages.push(page);
 		return page;
 	}
 
 	findPageByWebsiteId(websiteId: string) {
+		let pagesList = [];
 		for (let x=0; x < this.pages.length; x++) {
 			if(this.pages[x].websiteId === websiteId) {
-				return this.pages[x];
+				pagesList.push(this.pages[x]);
 			}
 		}
+		return pagesList;
 	}
 
 	findPageById(pageId: string) {

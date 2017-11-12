@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PageService } from '../../../services/page.service.client';
 
 @Component({
   selector: 'app-page-list',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-list.component.css']
 })
 export class PageListComponent implements OnInit {
-
-  constructor() { }
+  //properties
+  userId: string;
+  websiteId: string;
+  pages = [{}];
+  constructor(private activatedRoute: ActivatedRoute, private pageService: PageService) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(
+      params => {
+        this.userId = params['userId'];
+        this.websiteId = params['websiteId'];
+      }
+    );
+
+    this.pages = this.pageService.findPageByWebsiteId(this.websiteId);
   }
 
 }

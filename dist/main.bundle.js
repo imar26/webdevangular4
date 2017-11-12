@@ -286,7 +286,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/page/page-edit/page-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-left\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/123/website/123/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit Page\n        </li>\n      </ul>\n    </div>\n  </div>\n</header>\n<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <div class=\"stdPadding\">\n        <div class=\"callout\">\n          <form method=\"post\" id=\"editPageForm\">\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Name</label>\n                <input type=\"text\" value=\"Blog Post\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Title</label>\n                <input type=\"text\" placeholder=\"Page Title\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-2 medium-2 cell\">\n                <a routerLink=\"/user/123/website/123/page\" class=\"button customBtnColor\">Update Page</a>\n              </div>\n              <div class=\"large-2 medium-2 cell\">\n                <a routerLink=\"/user/123/website/123/page\" class=\"button customBtnColor\">Delete Page</a>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer>\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-bar-right\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/123\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</footer>\n"
+module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-left\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit Page\n        </li>\n      </ul>\n    </div>\n  </div>\n</header>\n<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <div class=\"stdPadding\">\n        <div class=\"callout\">\n          <form method=\"post\" id=\"editPageForm\">\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Name</label>\n                <input type=\"text\" placeholder=\"Blog Post\" [(ngModel)]=\"page.name\" name=\"name\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Description</label>\n                <textarea rows=\"3\" [(ngModel)]=\"page.description\" name=\"description\"></textarea>\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-2 medium-2 cell\">\n                <a (click)=\"update(page)\" class=\"button customBtnColor\">Update Page</a>\n              </div>\n              <div class=\"large-2 medium-2 cell\">\n                <a (click)=\"delete(page._id)\" class=\"button customBtnColor\">Delete Page</a>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer>\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-bar-right\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</footer>\n"
 
 /***/ }),
 
@@ -295,6 +295,8 @@ module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_page_service_client__ = __webpack_require__("../../../../../src/app/services/page.service.client.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageEditComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -306,10 +308,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var PageEditComponent = (function () {
-    function PageEditComponent() {
+    function PageEditComponent(router, activatedRoute, pageService) {
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.pageService = pageService;
     }
     PageEditComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.userId = params['userId'];
+            _this.websiteId = params['websiteId'];
+            _this.pageId = params['pageId'];
+        });
+        this.page = this.pageService.findPageById(this.pageId);
+    };
+    PageEditComponent.prototype.update = function (page) {
+        var updatePage = this.pageService.updatePage(this.pageId, page);
+        if (updatePage) {
+            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/']);
+        }
+    };
+    PageEditComponent.prototype.delete = function (pageId) {
+        var deletedPage = this.pageService.deletePage(pageId);
+        if (deletedPage) {
+            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/']);
+        }
     };
     return PageEditComponent;
 }());
@@ -319,9 +345,10 @@ PageEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/page/page-edit/page-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/page/page-edit/page-edit.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_page_service_client__["a" /* PageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_page_service_client__["a" /* PageService */]) === "function" && _c || Object])
 ], PageEditComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=page-edit.component.js.map
 
 /***/ }),
@@ -347,7 +374,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/page/page-list/page-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-left\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/123/website\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Pages\n        </li>\n      </ul>\n    </div>\n    <div class=\"top-bar-right\">\n      <ul class=\"menu text-right\">\n        <li>\n          <a routerLink=\"/user/123/website/123/page/new\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</header>\n<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <div class=\"stdPadding\">\n        <div class=\"callout\">\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <h3>Page Name</h3>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <h3>Action</h3>\n            </div>\n          </div>\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <p><a routerLink=\"/user/123/website/123/page/123/widget\">Blog Post</a></p>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <a routerLink=\"/user/123/website/123/page/123\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n            </div>\n          </div>\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <p><a routerLink=\"/user/123/website/123/page/123/widget\">Blogs</a></p>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <a routerLink=\"/user/123/website/123/page/123\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n            </div>\n          </div>\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <p><a routerLink=\"/user/123/website/123/page/123/widget\">Home</a></p>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <a routerLink=\"/user/123/website/123/page/123\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n            </div>\n          </div>\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <p><a routerLink=\"/user/123/website/123/page/123/widget\">About</a></p>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <a routerLink=\"/user/123/website/123/page/123\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n            </div>\n          </div>\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <p><a routerLink=\"/user/123/website/123/page/123/widget\">Contact Us</a></p>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <a routerLink=\"/user/123/website/123/page/123\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer>\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-bar-right\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/123\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</footer>\n"
+module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-left\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/{{userId}}/website\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Pages\n        </li>\n      </ul>\n    </div>\n    <div class=\"top-bar-right\">\n      <ul class=\"menu text-right\">\n        <li>\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/new\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</header>\n<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <div class=\"stdPadding\">\n        <div class=\"callout\">\n          <div class=\"grid-x grid-padding-x\">\n            <div class=\"large-8 cell\">\n              <h3>Page Name</h3>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <h3>Action</h3>\n            </div>\n          </div>\n          <div class=\"grid-x grid-padding-x\" *ngFor=\"let page of pages\">\n            <div class=\"large-8 cell\">\n              <p><a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{page._id}}/widget\">{{page.name}}</a></p>\n            </div>\n            <div class=\"large-4 cell clearfix text-right\">\n              <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{page._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer>\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-bar-right\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</footer>\n"
 
 /***/ }),
 
@@ -356,6 +383,8 @@ module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_page_service_client__ = __webpack_require__("../../../../../src/app/services/page.service.client.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -367,10 +396,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var PageListComponent = (function () {
-    function PageListComponent() {
+    function PageListComponent(activatedRoute, pageService) {
+        this.activatedRoute = activatedRoute;
+        this.pageService = pageService;
+        this.pages = [{}];
     }
     PageListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.userId = params['userId'];
+            _this.websiteId = params['websiteId'];
+        });
+        this.pages = this.pageService.findPageByWebsiteId(this.websiteId);
     };
     return PageListComponent;
 }());
@@ -380,9 +420,10 @@ PageListComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/page/page-list/page-list.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/page/page-list/page-list.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_page_service_client__["a" /* PageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_page_service_client__["a" /* PageService */]) === "function" && _b || Object])
 ], PageListComponent);
 
+var _a, _b;
 //# sourceMappingURL=page-list.component.js.map
 
 /***/ }),
@@ -408,7 +449,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/page/page-new/page-new.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-left\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/123/website/123/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> New Page\n        </li>\n      </ul>\n    </div>\n  </div>\n</header>\n<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <div class=\"stdPadding\">\n        <div class=\"callout\">\n          <form method=\"post\" id=\"newPageForm\">\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Name</label>\n                <input type=\"text\" placeholder=\"Page Name\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Title</label>\n                <input type=\"text\" placeholder=\"Page Title\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-2 medium-2 cell\">\n                <a routerLink=\"/user/123/website/123/page\" class=\"button customBtnColor\">Add Page</a>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer>\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-bar-right\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/123\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</footer>\n"
+module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-left\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> New Page\n        </li>\n      </ul>\n    </div>\n  </div>\n</header>\n<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <div class=\"stdPadding\">\n        <div class=\"callout\">\n          <form (ngSubmit)=\"createPage()\" #f=\"ngForm\">\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell field\">\n                <label>Name</label>\n                <input type=\"text\" placeholder=\"Page Name\" name=\"name\" ngModel #name=\"ngModel\" required />\n                <span class=\"help-block\" *ngIf=\"!name.valid && name.touched\">Please enter name!</span>\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Description</label>\n                <textarea rows=\"3\" placeholder=\"Description\" name=\"description\" ngModel #description=\"ngModel\"></textarea>\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-2 medium-2 cell\">\n                <button type=\"submit\" [disabled]=\"!f.valid\" class=\"button customBtnColor\">Add Page</button>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer>\n  <div class=\"bottom-bar\">\n    <div class=\"bottom-bar-right\">\n      <ul class=\"menu\">\n        <li>\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n        </li>\n      </ul>\n    </div>\n  </div>\n</footer>\n"
 
 /***/ }),
 
@@ -417,6 +458,9 @@ module.exports = "<header>\n  <div class=\"top-bar\">\n    <div class=\"top-bar-
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_page_service_client__ = __webpack_require__("../../../../../src/app/services/page.service.client.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageNewComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -428,22 +472,49 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var PageNewComponent = (function () {
-    function PageNewComponent() {
+    function PageNewComponent(activatedRoute, pageService, router) {
+        this.activatedRoute = activatedRoute;
+        this.pageService = pageService;
+        this.router = router;
+        this.page = {};
     }
     PageNewComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.userId = params['userId'];
+            _this.websiteId = params['websiteId'];
+        });
+    };
+    PageNewComponent.prototype.createPage = function () {
+        this.name = this.pageForm.value.name;
+        this.description = this.pageForm.value.description;
+        this.page['name'] = this.name;
+        this.page['description'] = this.description;
+        var page = this.pageService.createPage(this.websiteId, this.page);
+        if (page) {
+            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/']);
+        }
     };
     return PageNewComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('f'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* NgForm */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* NgForm */]) === "function" && _a || Object)
+], PageNewComponent.prototype, "pageForm", void 0);
 PageNewComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-page-new',
         template: __webpack_require__("../../../../../src/app/components/page/page-new/page-new.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/page/page-new/page-new.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_page_service_client__["a" /* PageService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_page_service_client__["a" /* PageService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _d || Object])
 ], PageNewComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=page-new.component.js.map
 
 /***/ }),
@@ -1612,6 +1683,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // injecting service into module
 var PageService = (function () {
     function PageService() {
+        this.pages = [
+            { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
+            { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
+            { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
+        ];
         this.api = {
             'createPage': this.createPage,
             'findPageByWebsiteId': this.findPageByWebsiteId,
@@ -1621,17 +1697,20 @@ var PageService = (function () {
         };
     }
     PageService.prototype.createPage = function (websiteId, page) {
-        page._id = Math.random();
+        var length = this.pages.length;
+        page._id = (length + 1).toString();
         page.websiteId = websiteId;
         this.pages.push(page);
         return page;
     };
     PageService.prototype.findPageByWebsiteId = function (websiteId) {
+        var pagesList = [];
         for (var x = 0; x < this.pages.length; x++) {
             if (this.pages[x].websiteId === websiteId) {
-                return this.pages[x];
+                pagesList.push(this.pages[x]);
             }
         }
+        return pagesList;
     };
     PageService.prototype.findPageById = function (pageId) {
         for (var x = 0; x < this.pages.length; x++) {

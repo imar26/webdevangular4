@@ -3,7 +3,7 @@
     <div class="top-bar-left">
       <ul class="menu">
         <li>
-          <a routerLink="/user/123/website/123/page"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Edit Page
+          <a routerLink="/user/{{userId}}/website/{{websiteId}}/page"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Edit Page
         </li>
       </ul>
     </div>
@@ -18,21 +18,21 @@
             <div class="grid-x grid-padding-x">
               <div class="large-12 cell">
                 <label>Name</label>
-                <input type="text" value="Blog Post" />
+                <input type="text" placeholder="Blog Post" [(ngModel)]="page.name" name="name" />
               </div>
             </div>
             <div class="grid-x grid-padding-x">
               <div class="large-12 cell">
-                <label>Title</label>
-                <input type="text" placeholder="Page Title" />
+                <label>Description</label>
+                <textarea rows="3" [(ngModel)]="page.description" name="description"></textarea>
               </div>
             </div>
             <div class="grid-x grid-padding-x">
               <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page" class="button customBtnColor">Update Page</a>
+                <a (click)="update(page)" class="button customBtnColor">Update Page</a>
               </div>
               <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page" class="button customBtnColor">Delete Page</a>
+                <a (click)="delete(page._id)" class="button customBtnColor">Delete Page</a>
               </div>
             </div>
           </form>
@@ -46,7 +46,7 @@
     <div class="bottom-bar-right">
       <ul class="menu">
         <li>
-          <a routerLink="/user/123"><i class="fa fa-user" aria-hidden="true"></i></a>
+          <a routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
         </li>
       </ul>
     </div>
