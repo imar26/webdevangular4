@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 
 export class UserService {
 	users = [
-		{_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-		{_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-		{_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-		{_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
+		{_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder", email: ""  },
+		{_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley", email: ""  },
+		{_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia", email: ""  },
+		{_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi", email: "" }
 	];
 
 	api = {
@@ -59,8 +59,9 @@ export class UserService {
 			if(this.users[x]._id === userId) {
 				this.users[x].firstName = user.firstName;
 				this.users[x].lastName = user.lastName;
+				this.users[x].email = user.email;
+				return this.users[x];
 			}
-			return this.users[x];
 		}
 	}
 

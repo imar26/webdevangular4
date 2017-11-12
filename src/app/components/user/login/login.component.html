@@ -6,28 +6,36 @@
         <div class="callout">
           <h2>Log In</h2>
           <hr>
-          <form method="post" id="loginForm">
+          <div *ngIf="errorFlag">
+            {{errorMessage}}
+          </div>
+          <form (ngSubmit)="login()" #f="ngForm">
             <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
+              <div class="large-12 cell field">
                 <label>Username</label>
-                <input type="text" placeholder="username" />
+                <input type="text" placeholder="username" ngModel name="username" required #username="ngModel" />
+                <span class="help-block" *ngIf="!username.valid && username.touched">Please enter username!</span>
               </div>
             </div>
             <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
+              <div class="large-12 cell field">
                 <label>Password</label>
-                <input type="password" placeholder="password" />
+                <input type="password" placeholder="password" ngModel name="password" required #password="ngModel" />
+                <span class="help-block" *ngIf="!password.valid && password.touched">Please enter password!</span>
               </div>
             </div>
             <div class="grid-x grid-padding-x">
               <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123" class="button customBtnColor">Login</a>
+                <button type="submit" class="button customBtnColor" [disabled]="!f.valid">Login</button>
               </div>
               <div class="large-2 medium-2 cell">
                 <a routerLink="/register" class="button customBtnColor">Register</a>
               </div>
             </div>
           </form>
+          <div *ngIf="notFoundFlag">
+            {{userNotFound}}
+          </div>
         </div>
       </div>
     </div>

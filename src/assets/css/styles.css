@@ -142,3 +142,32 @@ form a {
   border-radius: 0 0 5px 5px;
   padding: 2px 5px;
 }
+
+button {
+  width: 100%;
+}
+
+.help-block {
+  color: #d82a0c;
+}
+
+.ng-invalid.ng-touched {
+  border-color: #d82a0c;
+}
+
+.field {
+  position: relative;
+}
+
+.field .help-block {
+  position: absolute;
+  bottom: 0;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+form input {
+  margin: 0 0 20px !important;
+}

@@ -18,39 +18,42 @@
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Username</label>
-								<input type="text" value="jannunzi" />
+								<input type="text" value="jannunzi" [(ngModel)]="user.username" name="username" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Email</label>
-								<input type="email" value="jannunzi@gmail.com" />
+								<input type="email" value="jannunzi@gmail.com" [(ngModel)]="user.email" name="email" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>First Name</label>
-								<input type="text" value="Jose" />
+								<input type="text" value="Jose" [(ngModel)]="user.firstName" name="firstName" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Last Name</label>
-								<input type="text" value="Annunziato" />
+								<input type="text" value="Annunziato" [(ngModel)]="user.lastName" name="lastName" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-2 medium-2 cell">
-								<a routerLink="/user/123" class="button customBtnColor">Update Profile</a>
+								<a (click)="updateUser(user)" class="button customBtnColor">Update Profile</a>
 							</div>
 							<div class="large-2 medium-2 cell">
-								<a routerLink="/user/123/website" class="button customBtnColor">Websites</a>
+								<a (click)="goToWebsites()" class="button customBtnColor">Websites</a>
 							</div>
 							<div class="large-2 medium-2 cell">
 								<a routerLink="/login" class="button customBtnColor">Logout</a>
 							</div>
 						</div>
 					</form>
+					<div *ngIf="successFlag">
+						{{success}}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -61,7 +64,7 @@
 		<div class="bottom-bar-right">
 			<ul class="menu">
 				<li>
-					<a routerLink="/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
+					<a (click)="goToProfile()"><i class="fa fa-user" aria-hidden="true"></i></a>
 				</li>
 			</ul>
 		</div>

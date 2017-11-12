@@ -469,7 +469,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <h1>Welcome to MEAN Stack Web Development - Angular 4</h1>\n      <div class=\"login\">\n        <div class=\"callout\">\n          <h2>Log In</h2>\n          <hr>\n          <form method=\"post\" id=\"loginForm\">\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Username</label>\n                <input type=\"text\" placeholder=\"username\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell\">\n                <label>Password</label>\n                <input type=\"password\" placeholder=\"password\" />\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-2 medium-2 cell\">\n                <a routerLink=\"/user/123\" class=\"button customBtnColor\">Login</a>\n              </div>\n              <div class=\"large-2 medium-2 cell\">\n                <a routerLink=\"/register\" class=\"button customBtnColor\">Register</a>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"grid-container\">\n  <div class=\"grid-x grid-padding-x\">\n    <div class=\"large-12 cell\">\n      <h1>Welcome to MEAN Stack Web Development - Angular 4</h1>\n      <div class=\"login\">\n        <div class=\"callout\">\n          <h2>Log In</h2>\n          <hr>\n          <div *ngIf=\"errorFlag\">\n            {{errorMessage}}\n          </div>\n          <form (ngSubmit)=\"login()\" #f=\"ngForm\">\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell field\">\n                <label>Username</label>\n                <input type=\"text\" placeholder=\"username\" ngModel name=\"username\" required #username=\"ngModel\" />\n                <span class=\"help-block\" *ngIf=\"!username.valid && username.touched\">Please enter username!</span>\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-12 cell field\">\n                <label>Password</label>\n                <input type=\"password\" placeholder=\"password\" ngModel name=\"password\" required #password=\"ngModel\" />\n                <span class=\"help-block\" *ngIf=\"!password.valid && password.touched\">Please enter password!</span>\n              </div>\n            </div>\n            <div class=\"grid-x grid-padding-x\">\n              <div class=\"large-2 medium-2 cell\">\n                <button type=\"submit\" class=\"button customBtnColor\" [disabled]=\"!f.valid\">Login</button>\n              </div>\n              <div class=\"large-2 medium-2 cell\">\n                <a routerLink=\"/register\" class=\"button customBtnColor\">Register</a>\n              </div>\n            </div>\n          </form>\n          <div *ngIf=\"notFoundFlag\">\n            {{userNotFound}}\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -478,6 +478,9 @@ module.exports = "<div class=\"grid-container\">\n  <div class=\"grid-x grid-pad
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -489,22 +492,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(router, userService) {
+        this.router = router;
+        this.userService = userService;
     }
     LoginComponent.prototype.ngOnInit = function () {
+        this.errorMessage = "Invalid username or password";
+    };
+    LoginComponent.prototype.login = function () {
+        this.username = this.loginForm.value.username;
+        this.password = this.loginForm.value.password;
+        var user = this.userService.findUserByCredentials(this.username, this.password);
+        if (user) {
+            this.router.navigate(['/user/' + user._id]);
+        }
+        else {
+            this.notFoundFlag = true;
+            this.userNotFound = "User not found.";
+        }
     };
     return LoginComponent;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('f'),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* NgForm */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* NgForm */]) === "function" && _a || Object)
+], LoginComponent.prototype, "loginForm", void 0);
 LoginComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-login',
         template: __webpack_require__("../../../../../src/app/components/user/login/login.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/user/login/login.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_user_service_client__["a" /* UserService */]) === "function" && _c || Object])
 ], LoginComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=login.component.js.map
 
 /***/ }),
@@ -530,7 +556,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n\t<div class=\"top-bar profile\">\n\t\t<div class=\"top-bar-left\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\tProfile\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</header>\n<div class=\"grid-container\">\n\t<div class=\"grid-x grid-padding-x\">\n\t\t<div class=\"large-12 cell\">\n\t\t\t<div class=\"stdPadding\">\n\t\t\t\t<div class=\"callout\">\n\t\t\t\t\t<form method=\"post\" id=\"profileForm\">\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Username</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"jannunzi\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Email</label>\n\t\t\t\t\t\t\t\t<input type=\"email\" value=\"jannunzi@gmail.com\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>First Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Jose\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Last Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Annunziato\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/user/123\" class=\"button customBtnColor\">Update Profile</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/user/123/website\" class=\"button customBtnColor\">Websites</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/login\" class=\"button customBtnColor\">Logout</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\t\t\n</div>\n<footer>\n\t<div class=\"bottom-bar\">\n\t\t<div class=\"bottom-bar-right\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\t<a routerLink=\"/profile\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</footer>"
+module.exports = "<header>\n\t<div class=\"top-bar profile\">\n\t\t<div class=\"top-bar-left\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\tProfile\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</header>\n<div class=\"grid-container\">\n\t<div class=\"grid-x grid-padding-x\">\n\t\t<div class=\"large-12 cell\">\n\t\t\t<div class=\"stdPadding\">\n\t\t\t\t<div class=\"callout\">\n\t\t\t\t\t<form method=\"post\" id=\"profileForm\">\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Username</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"jannunzi\" [(ngModel)]=\"user.username\" name=\"username\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Email</label>\n\t\t\t\t\t\t\t\t<input type=\"email\" value=\"jannunzi@gmail.com\" [(ngModel)]=\"user.email\" name=\"email\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>First Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Jose\" [(ngModel)]=\"user.firstName\" name=\"firstName\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\n\t\t\t\t\t\t\t\t<label>Last Name</label>\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Annunziato\" [(ngModel)]=\"user.lastName\" name=\"lastName\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a (click)=\"updateUser(user)\" class=\"button customBtnColor\">Update Profile</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a (click)=\"goToWebsites()\" class=\"button customBtnColor\">Websites</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\n\t\t\t\t\t\t\t\t<a routerLink=\"/login\" class=\"button customBtnColor\">Logout</a>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>\n\t\t\t\t\t<div *ngIf=\"successFlag\">\n\t\t\t\t\t\t{{success}}\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\t\t\n</div>\n<footer>\n\t<div class=\"bottom-bar\">\n\t\t<div class=\"bottom-bar-right\">\n\t\t\t<ul class=\"menu\">\n\t\t\t\t<li>\n\t\t\t\t\t<a (click)=\"goToProfile()\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\n\t\t\t\t</li>\n\t\t\t</ul>\n\t\t</div>\n\t</div>\n</footer>"
 
 /***/ }),
 
@@ -539,6 +565,8 @@ module.exports = "<header>\n\t<div class=\"top-bar profile\">\n\t\t<div class=\"
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProfileComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -550,10 +578,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var ProfileComponent = (function () {
-    function ProfileComponent() {
+    function ProfileComponent(userService, activatedRoute, router) {
+        this.userService = userService;
+        this.activatedRoute = activatedRoute;
+        this.router = router;
     }
     ProfileComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.subscribe(function (params) {
+            _this.userId = params['userId'];
+        });
+        this.user = this.userService.findUserById(this.userId);
+    };
+    ProfileComponent.prototype.updateUser = function (user) {
+        var updateUser = this.userService.updateUser(user._id, user);
+        if (updateUser) {
+            this.successFlag = true;
+            this.success = "Profile updated successfully.";
+        }
+    };
+    ProfileComponent.prototype.goToWebsites = function () {
+        this.router.navigate(['/user/' + this.userId + '/website/']);
+    };
+    ProfileComponent.prototype.goToProfile = function () {
+        this.router.navigate(['/user/' + this.userId]);
     };
     return ProfileComponent;
 }());
@@ -563,9 +615,10 @@ ProfileComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/user/profile/profile.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/user/profile/profile.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* Router */]) === "function" && _c || Object])
 ], ProfileComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=profile.component.js.map
 
 /***/ }),
@@ -1518,10 +1571,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var UserService = (function () {
     function UserService() {
         this.users = [
-            { _id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder" },
-            { _id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley" },
-            { _id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia" },
-            { _id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi" }
+            { _id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder", email: "" },
+            { _id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley", email: "" },
+            { _id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia", email: "" },
+            { _id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi", email: "" }
         ];
         this.api = {
             'createUser': this.createUser,
@@ -1563,8 +1616,9 @@ var UserService = (function () {
             if (this.users[x]._id === userId) {
                 this.users[x].firstName = user.firstName;
                 this.users[x].lastName = user.lastName;
+                this.users[x].email = user.email;
+                return this.users[x];
             }
-            return this.users[x];
         }
     };
     UserService.prototype.deleteUser = function (userId) {
