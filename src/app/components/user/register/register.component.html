@@ -5,28 +5,33 @@
 				<div class="callout">
 					<h2>Register</h2>
 					<hr>
-					<form method="post" id="registerForm">
+					<div *ngIf="errorFlag">{{errorMessage}}</div>
+					<div *ngIf="usernameFlag">{{usernameExists}}</div>
+					<form (ngSubmit)="register()" #f="ngForm">
 						<div class="grid-x grid-padding-x">
-							<div class="large-12 cell">
+							<div class="large-12 cell field">
 								<label>Username</label>
-								<input type="text" placeholder="username" />
+								<input type="text" placeholder="username" name="username" ngModel #username="ngModel" required />
+								<span class="help-block" *ngIf="!username.valid && username.touched">Please enter username!</span>
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
-							<div class="large-12 cell">
+							<div class="large-12 cell field">
 								<label>Password</label>
-								<input type="password" placeholder="password" />
+								<input type="password" placeholder="password" name="password" ngModel #password="ngModel" required />
+								<span class="help-block" *ngIf="!password.valid && password.touched">Please enter password!</span>
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
-							<div class="large-12 cell">
+							<div class="large-12 cell field">
 								<label>Verify Password</label>
-								<input type="password" placeholder="verify password" />
+								<input type="password" placeholder="verify password" name="verifypassword" ngModel #verifypassword="ngModel" required />
+								<span class="help-block" *ngIf="!verifypassword.valid && verifypassword.touched">Please enter verifypassword!</span>
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-2 medium-2 cell">
-								<a routerLink="/user/123" class="button customBtnColor">Register</a>
+								<button type="submit" class="button customBtnColor" [disabled]="!f.valid">Register</button>
 							</div>
 							<div class="large-2 medium-2 cell">
 								<a routerLink="/login" class="button customBtnColor">Cancel</a>

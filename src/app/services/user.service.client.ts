@@ -25,15 +25,16 @@ export class UserService {
 	};
 
 	createUser(user: any) {
-	    user._id = Math.random();
+		let length = this.users.length;
+	    user._id = (length + 1).toString();
 	    this.users.push(user);
 	    return user;
 	}
 
 	findUserById(userId: string) {
 	    for (let x = 0; x < this.users.length; x++) {
-	    	if (this.users[x]._id === userId) {  
-	    		return this.users[x]; 
+	    	if (this.users[x]._id === userId) {
+				return this.users[x]; 
 	    	}
 	    }
 	}
