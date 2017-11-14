@@ -1,77 +1,51 @@
-<header>
-  <div class="top-bar">
-    <div class="top-bar-left">
-      <ul class="menu">
-        <li>
-          <a routerLink="/user/123/website/123/page/123/widget"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Edit Widget
-        </li>
-      </ul>
-    </div>
-  </div>
-</header>
-<div class="grid-container">
+<form method="post" id="editImageForm">
   <div class="grid-x grid-padding-x">
     <div class="large-12 cell">
-      <div class="stdPadding">
-        <div class="callout">
-          <form method="post" id="editHeadingForm">
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Name</label>
-                <input type="text" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Text</label>
-                <input type="text" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>URL</label>
-                <input type="text" value="http://lorempixel.com/400/200/sports/1/" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Width</label>
-                <input type="text" value="100%" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Upload</label>
-                <input type="file" />
-                <div class="grid-x grid-padding-x">
-                  <div class="large-2 medium-2 cell">
-                    <a routerLink="/user/123/website/123/page/123/widget" class="button deleteBtnColor">Upload Image</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page/123/widget" class="button customBtnColor">Update Image</a>
-              </div>
-              <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page/123/widget" class="button customBtnColor">Delete Image</a>
-              </div>
-            </div>
-          </form>
+      <label>Widget Type</label>
+      <input type="text" placeholder="Widget Type" disabled name="widgetType" [(ngModel)]="widget.widgetType" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Text</label>
+      <input type="text" placeholder="Text" name="text" [(ngModel)]="widget.text" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>URL</label>
+      <input type="text" placeholder="URL" name="url" [(ngModel)]="widget.url" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Width</label>
+      <select name="width" [(ngModel)]="widget.width">
+        <option [value]="20" [selected]="widget.width == '20'">20%</option>
+        <option [value]="40" [selected]="widget.width == '40'">40%</option>
+        <option [value]="60" [selected]="widget.width == '60'">60%</option>
+        <option [value]="80" [selected]="widget.width == '80'">80%</option>
+        <option [value]="100" [selected]="widget.width == '100'">100%</option>
+      </select>
+    </div>
+  </div>
+  <!-- <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Upload</label>
+      <input type="file" />
+      <div class="grid-x grid-padding-x">
+        <div class="large-2 medium-2 cell">
+          <a routerLink="/user/123/website/123/page/123/widget" class="button deleteBtnColor">Upload Image</a>
         </div>
       </div>
     </div>
-  </div>
-</div>
-<footer>
-  <div class="bottom-bar">
-    <div class="bottom-bar-right">
-      <ul class="menu">
-        <li>
-          <a routerLink="/user/123"><i class="fa fa-user" aria-hidden="true"></i></a>
-        </li>
-      </ul>
+  </div> -->
+  <div class="grid-x grid-padding-x">
+    <div class="large-2 medium-2 cell">
+      <a (click)="update(widget)" class="button customBtnColor">Update Image</a>
+    </div>
+    <div class="large-2 medium-2 cell">
+      <a (click)="delete(widget._id)" class="button customBtnColor">Delete Image</a>
     </div>
   </div>
-</footer>
+</form>
