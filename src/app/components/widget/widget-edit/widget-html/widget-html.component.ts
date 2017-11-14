@@ -3,11 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { WidgetService } from '../../../../services/widget.service.client';
 
 @Component({
-  selector: 'app-widget-header',
-  templateUrl: './widget-header.component.html',
-  styleUrls: ['./widget-header.component.css']
+  selector: 'app-widget-html',
+  templateUrl: './widget-html.component.html',
+  styleUrls: ['./widget-html.component.css']
 })
-export class WidgetHeaderComponent implements OnInit {
+export class WidgetHtmlComponent implements OnInit {
   //properties
   userId: string;
   websiteId: string;

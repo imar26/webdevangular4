@@ -1,3 +1,46 @@
-<p>
-  widget-edit works!
-</p>
+<header>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <li>
+            <a routerLink="/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Edit {{widgetName}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="large-12 cell">
+        <div class="stdPadding">
+          <div class="callout">
+            <div [ngSwitch]="widget.widgetType">
+              <div *ngSwitchCase="'HEADING'">
+                <app-widget-header></app-widget-header>
+              </div>
+              <div *ngSwitchCase="'HTML'">
+                <app-widget-html></app-widget-html>
+              </div>
+              <div *ngSwitchCase="'IMAGE'">
+                <app-widget-image></app-widget-image>
+              </div>
+              <div *ngSwitchCase="'YOUTUBE'">
+                <app-widget-youtube></app-widget-youtube>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="bottom-bar">
+      <div class="bottom-bar-right">
+        <ul class="menu">
+          <li>
+            <a routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>

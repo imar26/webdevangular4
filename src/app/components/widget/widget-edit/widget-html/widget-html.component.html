@@ -1,0 +1,22 @@
+<form method="post" id="editHtmlForm">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Widget Type</label>
+      <input type="text" placeholder="Widget Type" disabled name="widgetType" [(ngModel)]="widget.widgetType" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Text</label>
+      <input type="text" placeholder="Text" name="text" [(ngModel)]="widget.text" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-2 medium-2 cell">
+      <a (click)="update(widget)" class="button customBtnColor">Update Html</a>
+    </div>
+    <div class="large-2 medium-2 cell">
+      <a (click)="delete(widget._id)" class="button customBtnColor">Delete Html</a>
+    </div>
+  </div>
+</form>

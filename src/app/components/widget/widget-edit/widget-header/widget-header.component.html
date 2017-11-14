@@ -1,60 +1,35 @@
-<header>
-  <div class="top-bar">
-    <div class="top-bar-left">
-      <ul class="menu">
-        <li>
-          <a routerLink="/user/123/website/123/page/123/widget"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> Edit Widget
-        </li>
-      </ul>
-    </div>
-  </div>
-</header>
-<div class="grid-container">
+<form method="post" id="editHeadingForm">
   <div class="grid-x grid-padding-x">
     <div class="large-12 cell">
-      <div class="stdPadding">
-        <div class="callout">
-          <form method="post" id="editHeadingForm">
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Name</label>
-                <input type="text" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Text</label>
-                <input type="text" value="Lorem Ipsum is simply dummy text of the printing and typesetting industry." />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-12 cell">
-                <label>Size</label>
-                <input type="text" value="3" />
-              </div>
-            </div>
-            <div class="grid-x grid-padding-x">
-              <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page/123/widget" class="button customBtnColor">Update Heading</a>
-              </div>
-              <div class="large-2 medium-2 cell">
-                <a routerLink="/user/123/website/123/page/123/widget" class="button customBtnColor">Delete Heading</a>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      <label>Widget Type</label>
+      <input type="text" placeholder="Widget Type" disabled name="widgetType" [(ngModel)]="widget.widgetType" />
     </div>
   </div>
-</div>
-<footer>
-  <div class="bottom-bar">
-    <div class="bottom-bar-right">
-      <ul class="menu">
-        <li>
-          <a routerLink="/user/123"><i class="fa fa-user" aria-hidden="true"></i></a>
-        </li>
-      </ul>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Text</label>
+      <input type="text" placeholder="Text" name="text" [(ngModel)]="widget.text" />
     </div>
   </div>
-</footer>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Size</label>
+      <select name="size" [(ngModel)]="widget.size">
+        <option [value]="1" [selected]="widget.size == '1'">1</option>
+        <option [value]="2" [selected]="widget.size == '2'">2</option>
+        <option [value]="3" [selected]="widget.size == '3'">3</option>
+        <option [value]="4" [selected]="widget.size == '4'">4</option>
+        <option [value]="5" [selected]="widget.size == '5'">5</option>
+        <option [value]="6" [selected]="widget.size == '6'">6</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-2 medium-2 cell">
+      <a (click)="update(widget)" class="button customBtnColor">Update Heading</a>
+    </div>
+    <div class="large-2 medium-2 cell">
+      <a (click)="delete(widget._id)" class="button customBtnColor">Delete Heading</a>
+    </div>
+  </div>
+</form>

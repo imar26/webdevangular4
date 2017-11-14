@@ -68,12 +68,12 @@ export class WidgetService {
 				} else if(this.widgets[x].widgetType == 'IMAGE') {
 					this.widgets[x].width = widget.width;					
 					this.widgets[x].url = widget.url;	
-					this.widgets[x].text = null;					
+					this.widgets[x].text = widget.text;					
 					this.widgets[x].size = null;				
 				} else if(this.widgets[x].widgetType == 'YOUTUBE') {
 					this.widgets[x].width = widget.width;					
 					this.widgets[x].url = widget.url;
-					this.widgets[x].text = null;					
+					this.widgets[x].text = widget.text;					
 					this.widgets[x].size = null;
 				}
 			}
