@@ -1,3 +1,46 @@
-<p>
-  widget-new works!
-</p>
+<header>
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <ul class="menu">
+        <li>
+          <a routerLink="/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/choose"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> New {{widgetType}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+<div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <div class="stdPadding">
+        <div class="callout">
+          <div [ngSwitch]="widgetName">
+            <div *ngSwitchCase="'HEADING'">
+              <app-widget-header-new></app-widget-header-new>
+            </div>
+            <div *ngSwitchCase="'HTML'">
+              <app-widget-html-new></app-widget-html-new>
+            </div>
+            <div *ngSwitchCase="'IMAGE'">
+              <app-widget-image-new></app-widget-image-new>
+            </div>
+            <div *ngSwitchCase="'YOUTUBE'">
+              <app-widget-youtube-new></app-widget-youtube-new>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="bottom-bar">
+    <div class="bottom-bar-right">
+      <ul class="menu">
+        <li>
+          <a routerLink="/user/{{userId}}"><i class="fa fa-user" aria-hidden="true"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,19 @@
+<form (ngSubmit)="createHtml()" #f="ngForm">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell field">
+      <label>Widget Type</label>
+      <input type="text" placeholder="Name" disabled name="widgetType" value="{{widgetName}}" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Text</label>
+      <input type="text" placeholder="Text" ngModel name="text" #text="ngModel" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-2 medium-2 cell">
+      <button type="submit" [disabled]="!f.valid" class="button customBtnColor">Add Html</button>
+    </div>
+  </div>
+</form>

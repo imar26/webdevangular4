@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { WidgetService } from '../../../../services/widget.service.client';
 
 @Component({
   selector: 'app-widget-youtube-new',
@@ -6,10 +9,56 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./widget-youtube-new.component.css']
 })
 export class WidgetYoutubeNewComponent implements OnInit {
+  @ViewChild('f') youtubeForm: NgForm;
+  //properties
+  userId: string;
+  websiteId: string;
+  pageId: string;
+  widgetType: string;
+  widgetName: string;
+  text: string;
+  url: string;
+  width: string;
+  widget = {};
 
-  constructor() { }
+  constructor(private router:Router, private activatedRoute: ActivatedRoute, private widgetService: WidgetService) { }
 
   ngOnInit() {
+    this.activatedRoute.params.subscribe(
+      params => {
+        this.userId = params['userId'];
+        this.websiteId = params['websiteId'];
+        this.pageId = params['pageId'];
+        this.widgetType = params['widgetType'];
+      }
+    );
+
+    if(this.widgetType == 'header') {
+      this.widgetName = 'HEADING';
+    } else if(this.widgetType == 'html') {
+      this.widgetName = 'HTML';
+    } else if(this.widgetType == 'image') {
+      this.widgetName = 'IMAGE';
+    } else if(this.widgetType == 'youtube') {
+      this.widgetName = 'YOUTUBE';
+    }
+  }
+
+  createYoutube() {
+    this.text = this.youtubeForm.value.text;
+    this.url = this.youtubeForm.value.url;
+    this.width = this.youtubeForm.value.width;
+
+    this.widget['widgetType'] = this.widgetName;
+    this.widget['text'] = this.text;
+    this.widget['size'] = null;
+    this.widget['width'] = this.width;
+    this.widget['url'] = this.url;
+
+    let widget = this.widgetService.createWidget(this.pageId, this.widget);
+    if(widget) {
+      this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/'+this.pageId+'/widget/']);
+    }
   }
 
 }

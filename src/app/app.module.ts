@@ -32,6 +32,7 @@ import { WidgetNewComponent } from './components/widget/widget-new/widget-new.co
 import { WidgetHeaderNewComponent } from './components/widget/widget-new/widget-header-new/widget-header-new.component';
 import { WidgetImageNewComponent } from './components/widget/widget-new/widget-image-new/widget-image-new.component';
 import { WidgetYoutubeNewComponent } from './components/widget/widget-new/widget-youtube-new/widget-youtube-new.component';
+import { WidgetHtmlNewComponent } from './components/widget/widget-new/widget-html-new/widget-html-new.component';
 
 // Services
 import { UserService } from './services/user.service.client';
@@ -66,7 +67,8 @@ import { WidgetService } from './services/widget.service.client';
     WidgetNewComponent,
     WidgetHeaderNewComponent,
     WidgetImageNewComponent,
-    WidgetYoutubeNewComponent
+    WidgetYoutubeNewComponent,
+    WidgetHtmlNewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,32 @@
-<p>
-  widget-header-new works!
-</p>
+<form (ngSubmit)="createHeader()" #f="ngForm">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell field">
+      <label>Widget Type</label>
+      <input type="text" placeholder="Name" disabled name="widgetType" value="{{widgetName}}" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Text</label>
+      <input type="text" placeholder="Text" ngModel name="text" #text="ngModel" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Size</label>
+      <select ngModel name="size" #size="ngModel">
+        <option [ngValue]="1">1</option>
+        <option [ngValue]="2">2</option>
+        <option [ngValue]="3">3</option>
+        <option [ngValue]="4">4</option>
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="6">6</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-2 medium-2 cell">
+      <button type="submit" [disabled]="!f.valid" class="button customBtnColor">Add Header</button>
+    </div>
+  </div>
+</form>

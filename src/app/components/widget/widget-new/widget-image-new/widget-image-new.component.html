@@ -1,3 +1,48 @@
-<p>
-  widget-image-new works!
-</p>
+<form (ngSubmit)="createImage()" #f="ngForm">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Widget Type</label>
+      <input type="text" placeholder="Name" disabled name="widgetType" value="{{widgetName}}" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Text</label>
+      <input type="text" placeholder="Text" ngModel name="text" #text="ngModel" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>URL</label>
+      <input type="text" placeholder="URL" ngModel name="url" #url="ngModel" />
+    </div>
+  </div>
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Width</label>
+      <select ngModel name="width" #width="ngModel">
+        <option [ngValue]="20">20%</option>
+        <option [ngValue]="40">40%</option>
+        <option [ngValue]="60">60%</option>
+        <option [ngValue]="80">80%</option>
+        <option [ngValue]="100">100%</option>
+      </select>
+    </div>
+  </div>
+  <!-- <div class="grid-x grid-padding-x">
+    <div class="large-12 cell">
+      <label>Upload</label>
+      <input type="file" />
+      <div class="grid-x grid-padding-x">
+        <div class="large-2 medium-2 cell">
+          <a routerLink="/user/123/website/123/page/123/widget" class="button deleteBtnColor">Upload Image</a>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="grid-x grid-padding-x">
+    <div class="large-2 medium-2 cell">
+      <button type="submit" [disabled]="!f.valid" class="button customBtnColor">Add Image</button>
+    </div>
+  </div>
+</form>

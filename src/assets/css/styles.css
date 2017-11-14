@@ -101,6 +101,7 @@ label {
   font-size: 30px;
   line-height: 38px;
   position: relative;
+  text-transform: capitalize;
 }
 
 .menu li a {

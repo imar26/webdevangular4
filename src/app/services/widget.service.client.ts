@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class WidgetService {
-	widgets: [
-	 	{ "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO", "width": null, "url": null},
-	 	{ "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum", "width": null, "url": null},
-	 	{ "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%", "url": "http://lorempixel.com/400/200/", "size": null, "text": null},
-	 	{ "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>", "width": null, "url": null, "size": null},
-	 	{ "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum", "width": null, "url": null},
-	 	{ "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E", "size": null, "text": null},
+	widgets = [
+	 	{ "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": "2", "text": "GIZMODO", "width": null, "url": null},
+	 	{ "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": "4", "text": "Lorem ipsum", "width": null, "url": null},
+	 	{ "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100", "url": "http://lorempixel.com/400/200/", "size": null, "text": null},
+	 	{ "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum - <a>CLick here</a></p>", "width": null, "url": null, "size": null},
+	 	{ "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": "4", "text": "Lorem ipsum", "width": null, "url": null},
+	 	{ "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100", "url": "https://www.youtube.com/embed/AM2Ivdi9c4E", "size": null, "text": null},
 	 	{ "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>", "width": null, "url": null, "size": null}
 	];
 
@@ -27,18 +27,21 @@ export class WidgetService {
 	};
 
 	createWidget(pageId: string, widget: any) {
-		widget._id = Math.random();
+		let length = this.widgets.length;
+		widget._id = (length + 1).toString();
 		widget.pageId = pageId;
 		this.widgets.push(widget);
 		return widget;
 	}
 
 	findWidgetsByPageId(pageId: string) {
+		var widgetList = [];
 		for (let x=0; x < this.widgets.length; x++) {
 			if(this.widgets[x].pageId === pageId) {
-				return this.widgets[x];
+				widgetList.push(this.widgets[x]);
 			}
 		}
+		return widgetList;
 	}
 
 	findWidgetById(widgetId: string) {
@@ -59,12 +62,19 @@ export class WidgetService {
 					this.widgets[x].url = null;
 				} else if(this.widgets[x].widgetType == 'HTML') {
 					this.widgets[x].text = widget.text;
+					this.widgets[x].size = null;
+					this.widgets[x].width = null;					
+					this.widgets[x].url = null;
 				} else if(this.widgets[x].widgetType == 'IMAGE') {
 					this.widgets[x].width = widget.width;					
-					this.widgets[x].url = widget.url;					
+					this.widgets[x].url = widget.url;	
+					this.widgets[x].text = null;					
+					this.widgets[x].size = null;				
 				} else if(this.widgets[x].widgetType == 'YOUTUBE') {
 					this.widgets[x].width = widget.width;					
 					this.widgets[x].url = widget.url;
+					this.widgets[x].text = null;					
+					this.widgets[x].size = null;
 				}
 			}
 			return this.widgets[x];

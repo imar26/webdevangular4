@@ -4,12 +4,12 @@ import { NgForm } from '@angular/forms';
 import { WidgetService } from '../../../../services/widget.service.client';
 
 @Component({
-  selector: 'app-widget-image-new',
-  templateUrl: './widget-image-new.component.html',
-  styleUrls: ['./widget-image-new.component.css']
+  selector: 'app-widget-html-new',
+  templateUrl: './widget-html-new.component.html',
+  styleUrls: ['./widget-html-new.component.css']
 })
-export class WidgetImageNewComponent implements OnInit {
-  @ViewChild('f') imageForm: NgForm;
+export class WidgetHtmlNewComponent implements OnInit {
+  @ViewChild('f') htmlForm: NgForm;
   //properties
   userId: string;
   websiteId: string;
@@ -17,8 +17,6 @@ export class WidgetImageNewComponent implements OnInit {
   widgetType: string;
   widgetName: string;
   text: string;
-  url: string;
-  width: string;
   widget = {};
 
   constructor(private router:Router, private activatedRoute: ActivatedRoute, private widgetService: WidgetService) { }
@@ -44,16 +42,14 @@ export class WidgetImageNewComponent implements OnInit {
     }
   }
 
-  createImage() {
-    this.text = this.imageForm.value.text;
-    this.url = this.imageForm.value.url;
-    this.width = this.imageForm.value.width;
+  createHtml() {
+    this.text = this.htmlForm.value.text;
 
     this.widget['widgetType'] = this.widgetName;
     this.widget['text'] = this.text;
     this.widget['size'] = null;
-    this.widget['width'] = this.width;
-    this.widget['url'] = this.url;
+    this.widget['width'] = null;
+    this.widget['url'] = null;
 
     let widget = this.widgetService.createWidget(this.pageId, this.widget);
     if(widget) {
