@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class UserService {
+	constructor(){}
+
 	users = [
 		{_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder", email: ""  },
 		{_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley", email: ""  },
