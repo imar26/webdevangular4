@@ -18,25 +18,25 @@
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Username</label>
-								<input type="text" value="jannunzi" [(ngModel)]="user.username" name="username" />
+								<input type="text" value="jannunzi" [ngModel]="user?.username" (ngModelChange)="user.username = $event" name="username" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Email</label>
-								<input type="email" value="jannunzi@gmail.com" [(ngModel)]="user.email" name="email" />
+								<input type="email" value="jannunzi@gmail.com" [ngModel]="user?.email" (ngModelChange)="user.email = $event" name="email" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>First Name</label>
-								<input type="text" value="Jose" [(ngModel)]="user.firstName" name="firstName" />
+								<input type="text" value="Jose" [ngModel]="user?.firstName" (ngModelChange)="user.firstName = $event" name="firstName" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Last Name</label>
-								<input type="text" value="Annunziato" [(ngModel)]="user.lastName" name="lastName" />
+								<input type="text" value="Annunziato" [ngModel]="user?.lastName" (ngModelChange)="user.lastName = $event" name="lastName" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
