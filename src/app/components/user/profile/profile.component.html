@@ -18,7 +18,7 @@
 						<div class="grid-x grid-padding-x">
 							<div class="large-12 cell">
 								<label>Username</label>
-								<input type="text" value="jannunzi" [ngModel]="user?.username" (ngModelChange)="user.username = $event" name="username" />
+								<input type="text" value="jannunzi" [ngModel]="user?.username" (ngModelChange)="user.username = $event" name="username" disabled="disabled" />
 							</div>
 						</div>
 						<div class="grid-x grid-padding-x">
@@ -48,6 +48,9 @@
 							</div>
 							<div class="large-2 medium-2 cell">
 								<a routerLink="/login" class="button customBtnColor">Logout</a>
+							</div>
+							<div class="large-2 medium-2 cell">
+								<a (click)="deleteUser(user._id)" class="button customBtnColor">Delete User</a>
 							</div>
 						</div>
 					</form>

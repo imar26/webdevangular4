@@ -53,23 +53,19 @@ export class UserService {
 	}
 
 	updateUser(userId: string, user: any) {
-		for (let x=0; x < this.users.length; x++) {
-			if(this.users[x]._id === userId) {
-				this.users[x].firstName = user.firstName;
-				this.users[x].lastName = user.lastName;
-				this.users[x].email = user.email;
-				return this.users[x];
-			}
-		}
+		return this.http.put(this.baseUrl + "/api/user/"+userId, user)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
-	deleteUser(userId: string) {
-		for (let x=0; x < this.users.length; x++) {
-			if(this.users[x]._id === userId) {
-				this.users.splice(x, 1);
-				return true;
-			}
-		}
+	deleteUser(userId: string) {		
+		return this.http.delete(this.baseUrl + '/api/user/'+userId)
+			.map((response: Response) => {
+				if(response) {
+					return {};
+				}
+			});
 	}
 
 }

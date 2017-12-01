@@ -36,11 +36,26 @@ export class ProfileComponent implements OnInit {
   }
 
   updateUser(user) {
-    let updateUser = this.userService.updateUser(user._id, user);
-    if(updateUser) {
-      this.successFlag = true;
-      this.success = "Profile updated successfully.";
-    }
+    this.userService.updateUser(user._id, user)
+      .subscribe((user) => {
+        this.successFlag = true;
+        this.success = "Profile updated successfully.";
+        setTimeout(function(){ 
+          location.reload(); 
+        }, 2000);
+      }, (error) => {
+        console.log(error);
+      });
+  }
+
+  deleteUser(userId) {
+    this.userService.deleteUser(userId)
+      .subscribe((status) => {
+        console.log(status);
+        this.router.navigate(['/login']);
+      }, (error) => {
+        console.log(error);
+      });
   }
 
   goToWebsites() {
