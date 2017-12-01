@@ -581,16 +581,16 @@ var LoginComponent = (function () {
         this.errorMessage = "Invalid username or password";
     };
     LoginComponent.prototype.login = function () {
+        var _this = this;
         this.username = this.loginForm.value.username;
         this.password = this.loginForm.value.password;
-        var user = this.userService.findUserByCredentials(this.username, this.password);
-        if (user) {
-            this.router.navigate(['/user/' + user._id]);
-        }
-        else {
-            this.notFoundFlag = true;
-            this.userNotFound = "User not found.";
-        }
+        this.userService.findUserByCredentials(this.username, this.password)
+            .subscribe(function (user) {
+            _this.router.navigate(['/user/' + user._id]);
+        }, function (error) {
+            _this.notFoundFlag = true;
+            _this.userNotFound = "User not found.";
+        });
     };
     return LoginComponent;
 }());
@@ -633,7 +633,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\r\n\t<div class=\"top-bar profile\">\r\n\t\t<div class=\"top-bar-left\">\r\n\t\t\t<ul class=\"menu\">\r\n\t\t\t\t<li>\r\n\t\t\t\t\tProfile\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</div>\r\n</header>\r\n<div class=\"grid-container\">\r\n\t<div class=\"grid-x grid-padding-x\">\r\n\t\t<div class=\"large-12 cell\">\r\n\t\t\t<div class=\"stdPadding\">\r\n\t\t\t\t<div class=\"callout\">\r\n\t\t\t\t\t<form method=\"post\" id=\"profileForm\">\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>Username</label>\r\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"jannunzi\" [(ngModel)]=\"user.username\" name=\"username\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>Email</label>\r\n\t\t\t\t\t\t\t\t<input type=\"email\" value=\"jannunzi@gmail.com\" [(ngModel)]=\"user.email\" name=\"email\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>First Name</label>\r\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Jose\" [(ngModel)]=\"user.firstName\" name=\"firstName\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>Last Name</label>\r\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Annunziato\" [(ngModel)]=\"user.lastName\" name=\"lastName\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a (click)=\"updateUser(user)\" class=\"button customBtnColor\">Update Profile</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a (click)=\"goToWebsites()\" class=\"button customBtnColor\">Websites</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a routerLink=\"/login\" class=\"button customBtnColor\">Logout</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</form>\r\n\t\t\t\t\t<div *ngIf=\"successFlag\">\r\n\t\t\t\t\t\t{{success}}\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\t\t\r\n</div>\r\n<footer>\r\n\t<div class=\"bottom-bar\">\r\n\t\t<div class=\"bottom-bar-right\">\r\n\t\t\t<ul class=\"menu\">\r\n\t\t\t\t<li>\r\n\t\t\t\t\t<a (click)=\"goToProfile()\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</div>\r\n</footer>"
+module.exports = "<header>\r\n\t<div class=\"top-bar profile\">\r\n\t\t<div class=\"top-bar-left\">\r\n\t\t\t<ul class=\"menu\">\r\n\t\t\t\t<li>\r\n\t\t\t\t\tProfile\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</div>\r\n</header>\r\n<div class=\"grid-container\">\r\n\t<div class=\"grid-x grid-padding-x\">\r\n\t\t<div class=\"large-12 cell\">\r\n\t\t\t<div class=\"stdPadding\">\r\n\t\t\t\t<div class=\"callout\">\r\n\t\t\t\t\t<form method=\"post\" id=\"profileForm\">\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>Username</label>\r\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"jannunzi\" [ngModel]=\"user?.username\" (ngModelChange)=\"user.username = $event\" name=\"username\" disabled=\"disabled\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>Email</label>\r\n\t\t\t\t\t\t\t\t<input type=\"email\" value=\"jannunzi@gmail.com\" [ngModel]=\"user?.email\" (ngModelChange)=\"user.email = $event\" name=\"email\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>First Name</label>\r\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Jose\" [ngModel]=\"user?.firstName\" (ngModelChange)=\"user.firstName = $event\" name=\"firstName\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-12 cell\">\r\n\t\t\t\t\t\t\t\t<label>Last Name</label>\r\n\t\t\t\t\t\t\t\t<input type=\"text\" value=\"Annunziato\" [ngModel]=\"user?.lastName\" (ngModelChange)=\"user.lastName = $event\" name=\"lastName\" />\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t<div class=\"grid-x grid-padding-x\">\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a (click)=\"updateUser(user)\" class=\"button customBtnColor\">Update Profile</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a (click)=\"goToWebsites()\" class=\"button customBtnColor\">Websites</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a routerLink=\"/login\" class=\"button customBtnColor\">Logout</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t\t<div class=\"large-2 medium-2 cell\">\r\n\t\t\t\t\t\t\t\t<a (click)=\"deleteUser(user._id)\" class=\"button customBtnColor\">Delete User</a>\r\n\t\t\t\t\t\t\t</div>\r\n\t\t\t\t\t\t</div>\r\n\t\t\t\t\t</form>\r\n\t\t\t\t\t<div *ngIf=\"successFlag\">\r\n\t\t\t\t\t\t{{success}}\r\n\t\t\t\t\t</div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\t\t\r\n</div>\r\n<footer>\r\n\t<div class=\"bottom-bar\">\r\n\t\t<div class=\"bottom-bar-right\">\r\n\t\t\t<ul class=\"menu\">\r\n\t\t\t\t<li>\r\n\t\t\t\t\t<a (click)=\"goToProfile()\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n\t\t\t\t</li>\r\n\t\t\t</ul>\r\n\t\t</div>\r\n\t</div>\r\n</footer>"
 
 /***/ }),
 
@@ -669,14 +669,35 @@ var ProfileComponent = (function () {
         this.activatedRoute.params.subscribe(function (params) {
             _this.userId = params['userId'];
         });
-        this.user = this.userService.findUserById(this.userId);
+        this.userService.findUserById(this.userId)
+            .subscribe(function (user) {
+            _this.user = user;
+        }, function (error) {
+            console.log(error);
+        });
     };
     ProfileComponent.prototype.updateUser = function (user) {
-        var updateUser = this.userService.updateUser(user._id, user);
-        if (updateUser) {
-            this.successFlag = true;
-            this.success = "Profile updated successfully.";
-        }
+        var _this = this;
+        this.userService.updateUser(user._id, user)
+            .subscribe(function (user) {
+            _this.successFlag = true;
+            _this.success = "Profile updated successfully.";
+            setTimeout(function () {
+                location.reload();
+            }, 2000);
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    ProfileComponent.prototype.deleteUser = function (userId) {
+        var _this = this;
+        this.userService.deleteUser(userId)
+            .subscribe(function (status) {
+            console.log(status);
+            _this.router.navigate(['/login']);
+        }, function (error) {
+            console.log(error);
+        });
     };
     ProfileComponent.prototype.goToWebsites = function () {
         this.router.navigate(['/user/' + this.userId + '/website/']);
@@ -758,22 +779,24 @@ var RegisterComponent = (function () {
         this.usernameExists = "Username already exists.";
     };
     RegisterComponent.prototype.register = function () {
+        var _this = this;
         this.username = this.registerForm.value.username;
         this.password = this.registerForm.value.password;
         this.verifypassword = this.registerForm.value.verifypassword;
         if (this.password === this.verifypassword) {
             this.user['username'] = this.username;
             this.user['password'] = this.password;
-            var userExists = this.userService.findUserByUsername(this.username);
-            if (userExists) {
-                this.usernameFlag = true;
-            }
-            else {
-                var user = this.userService.createUser(this.user);
-                if (user) {
-                    this.router.navigate(['/user/' + user._id]);
-                }
-            }
+            this.userService.findUserByUsername(this.username)
+                .subscribe(function (user) {
+                _this.usernameFlag = true;
+            }, function (error) {
+                _this.userService.createUser(_this.user)
+                    .subscribe(function (user) {
+                    _this.router.navigate(['/user/' + user._id]);
+                }, function (error) {
+                    console.log(error);
+                });
+            });
         }
         else {
             this.errorFlag = true;
@@ -2260,8 +2283,10 @@ PageService = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2269,11 +2294,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 
 // injecting service into module
 var UserService = (function () {
-    function UserService() {
+    function UserService(http) {
+        this.http = http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.users = [
             { _id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder", email: "" },
             { _id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley", email: "" },
@@ -2290,56 +2322,51 @@ var UserService = (function () {
         };
     }
     UserService.prototype.createUser = function (user) {
-        var length = this.users.length;
-        user._id = (length + 1).toString();
-        this.users.push(user);
-        return user;
+        return this.http.post(this.baseUrl + '/api/user', user)
+            .map(function (response) {
+            return response.json();
+        });
     };
     UserService.prototype.findUserById = function (userId) {
-        for (var x = 0; x < this.users.length; x++) {
-            if (this.users[x]._id === userId) {
-                return this.users[x];
-            }
-        }
+        return this.http.get(this.baseUrl + '/api/user/' + userId)
+            .map(function (response) {
+            return response.json();
+        });
     };
     UserService.prototype.findUserByUsername = function (username) {
-        for (var x = 0; x < this.users.length; x++) {
-            if (this.users[x].username === username) {
-                return this.users[x];
-            }
-        }
+        return this.http.get(this.baseUrl + '/api/user/?username=' + username)
+            .map(function (response) {
+            return response.json();
+        });
     };
     UserService.prototype.findUserByCredentials = function (username, password) {
-        for (var x = 0; x < this.users.length; x++) {
-            if (this.users[x].username === username && this.users[x].password === password) {
-                return this.users[x];
-            }
-        }
+        return this.http.get(this.baseUrl + '/api/user/?username=' + username + '&password=' + password)
+            .map(function (response) {
+            return response.json();
+        });
     };
     UserService.prototype.updateUser = function (userId, user) {
-        for (var x = 0; x < this.users.length; x++) {
-            if (this.users[x]._id === userId) {
-                this.users[x].firstName = user.firstName;
-                this.users[x].lastName = user.lastName;
-                this.users[x].email = user.email;
-                return this.users[x];
-            }
-        }
+        return this.http.put(this.baseUrl + "/api/user/" + userId, user)
+            .map(function (response) {
+            return response.json();
+        });
     };
     UserService.prototype.deleteUser = function (userId) {
-        for (var x = 0; x < this.users.length; x++) {
-            if (this.users[x]._id === userId) {
-                this.users.splice(x, 1);
-                return true;
+        return this.http.delete(this.baseUrl + '/api/user/' + userId)
+            .map(function (response) {
+            if (response) {
+                return {};
             }
-        }
+        });
     };
     return UserService;
 }());
 UserService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], UserService);
 
+var _a;
 //# sourceMappingURL=user.service.client.js.map
 
 /***/ }),
