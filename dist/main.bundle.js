@@ -1209,7 +1209,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\r\n    <div class=\"top-bar\">\r\n      <div class=\"top-bar-left\">\r\n        <ul class=\"menu\">\r\n          <li>\r\n            <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit {{widgetName}}\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </header>\r\n  <div class=\"grid-container\">\r\n    <div class=\"grid-x grid-padding-x\">\r\n      <div class=\"large-12 cell\">\r\n        <div class=\"stdPadding\">\r\n          <div class=\"callout\">\r\n            <div [ngSwitch]=\"widget.widgetType\">\r\n              <div *ngSwitchCase=\"'HEADING'\">\r\n                <app-widget-header></app-widget-header>\r\n              </div>\r\n              <div *ngSwitchCase=\"'HTML'\">\r\n                <app-widget-html></app-widget-html>\r\n              </div>\r\n              <div *ngSwitchCase=\"'IMAGE'\">\r\n                <app-widget-image></app-widget-image>\r\n              </div>\r\n              <div *ngSwitchCase=\"'YOUTUBE'\">\r\n                <app-widget-youtube></app-widget-youtube>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <footer>\r\n    <div class=\"bottom-bar\">\r\n      <div class=\"bottom-bar-right\">\r\n        <ul class=\"menu\">\r\n          <li>\r\n            <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </footer>"
+module.exports = "<header>\r\n    <div class=\"top-bar\">\r\n      <div class=\"top-bar-left\">\r\n        <ul class=\"menu\">\r\n          <li>\r\n            <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit {{widgetName}}\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </header>\r\n  <div class=\"grid-container\">\r\n    <div class=\"grid-x grid-padding-x\">\r\n      <div class=\"large-12 cell\">\r\n        <div class=\"stdPadding\">\r\n          <div class=\"callout\">\r\n            <div [ngSwitch]=\"widget?.widgetType\">\r\n              <div *ngSwitchCase=\"'HEADING'\">\r\n                <app-widget-header></app-widget-header>\r\n              </div>\r\n              <div *ngSwitchCase=\"'HTML'\">\r\n                <app-widget-html></app-widget-html>\r\n              </div>\r\n              <div *ngSwitchCase=\"'IMAGE'\">\r\n                <app-widget-image></app-widget-image>\r\n              </div>\r\n              <div *ngSwitchCase=\"'YOUTUBE'\">\r\n                <app-widget-youtube></app-widget-youtube>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <footer>\r\n    <div class=\"bottom-bar\">\r\n      <div class=\"bottom-bar-right\">\r\n        <ul class=\"menu\">\r\n          <li>\r\n            <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </footer>"
 
 /***/ }),
 
@@ -1246,19 +1246,22 @@ var WidgetEditComponent = (function () {
             _this.pageId = params['pageId'];
             _this.widgetId = params['widgetId'];
         });
-        this.widget = this.widgetService.findWidgetById(this.widgetId);
-        if (this.widget['widgetType'] == 'HEADING') {
-            this.widgetName = 'header';
-        }
-        else if (this.widget['widgetType'] == 'HTML') {
-            this.widgetName = 'html';
-        }
-        else if (this.widget['widgetType'] == 'IMAGE') {
-            this.widgetName = 'image';
-        }
-        else if (this.widget['widgetType'] == 'YOUTUBE') {
-            this.widgetName = 'youtube';
-        }
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            if (_this.widget['widgetType'] == 'HEADING') {
+                _this.widgetName = 'header';
+            }
+            else if (_this.widget['widgetType'] == 'HTML') {
+                _this.widgetName = 'html';
+            }
+            else if (_this.widget['widgetType'] == 'IMAGE') {
+                _this.widgetName = 'image';
+            }
+            else if (_this.widget['widgetType'] == 'YOUTUBE') {
+                _this.widgetName = 'youtube';
+            }
+        });
     };
     return WidgetEditComponent;
 }());
@@ -1297,7 +1300,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-header/widget-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form method=\"post\" id=\"editHeadingForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [(ngModel)]=\"widget.widgetType\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [(ngModel)]=\"widget.text\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Size</label>\r\n      <select name=\"size\" [(ngModel)]=\"widget.size\">\r\n        <option [value]=\"1\" [selected]=\"widget.size == '1'\">1</option>\r\n        <option [value]=\"2\" [selected]=\"widget.size == '2'\">2</option>\r\n        <option [value]=\"3\" [selected]=\"widget.size == '3'\">3</option>\r\n        <option [value]=\"4\" [selected]=\"widget.size == '4'\">4</option>\r\n        <option [value]=\"5\" [selected]=\"widget.size == '5'\">5</option>\r\n        <option [value]=\"6\" [selected]=\"widget.size == '6'\">6</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Heading</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Heading</a>\r\n    </div>\r\n  </div>\r\n</form>"
+module.exports = "<form method=\"post\" id=\"editHeadingForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [ngModel]=\"widget?.widgetType\" (ngModelChange)=\"widget.widgetType = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [ngModel]=\"widget?.text\" (ngModelChange)=\"widget.text = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Size</label>\r\n      <select name=\"size\" [ngModel]=\"widget?.size\" (ngModelChange)=\"widget.size = $event\">\r\n        <option [value]=\"1\" [selected]=\"widget?.size == '1'\">1</option>\r\n        <option [value]=\"2\" [selected]=\"widget?.size == '2'\">2</option>\r\n        <option [value]=\"3\" [selected]=\"widget?.size == '3'\">3</option>\r\n        <option [value]=\"4\" [selected]=\"widget?.size == '4'\">4</option>\r\n        <option [value]=\"5\" [selected]=\"widget?.size == '5'\">5</option>\r\n        <option [value]=\"6\" [selected]=\"widget?.size == '6'\">6</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Heading</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Heading</a>\r\n    </div>\r\n  </div>\r\n</form>"
 
 /***/ }),
 
@@ -1335,19 +1338,28 @@ var WidgetHeaderComponent = (function () {
             _this.pageId = params['pageId'];
             _this.widgetId = params['widgetId'];
         });
-        this.widget = this.widgetService.findWidgetById(this.widgetId);
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+        });
     };
     WidgetHeaderComponent.prototype.update = function (widget) {
-        var updateWidget = this.widgetService.updateWidget(this.widgetId, widget);
-        if (updateWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.updateWidget(this.widgetId, widget)
+            .subscribe(function (updateWidget) {
+            if (updateWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     WidgetHeaderComponent.prototype.delete = function (widgetId) {
-        var deletedWidget = this.widgetService.deleteWidget(widgetId);
-        if (deletedWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.deleteWidget(widgetId)
+            .subscribe(function (deletedWidget) {
+            if (deletedWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     return WidgetHeaderComponent;
 }());
@@ -1386,7 +1398,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-html/widget-html.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form method=\"post\" id=\"editHtmlForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [(ngModel)]=\"widget.widgetType\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [(ngModel)]=\"widget.text\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Html</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Html</a>\r\n    </div>\r\n  </div>\r\n</form>"
+module.exports = "<form method=\"post\" id=\"editHtmlForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [ngModel]=\"widget?.widgetType\" (ngModelChange)=\"widget.widgetType = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [ngModel]=\"widget?.text\" (ngModelChange)=\"widget.text = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Html</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Html</a>\r\n    </div>\r\n  </div>\r\n</form>"
 
 /***/ }),
 
@@ -1424,19 +1436,28 @@ var WidgetHtmlComponent = (function () {
             _this.pageId = params['pageId'];
             _this.widgetId = params['widgetId'];
         });
-        this.widget = this.widgetService.findWidgetById(this.widgetId);
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+        });
     };
     WidgetHtmlComponent.prototype.update = function (widget) {
-        var updateWidget = this.widgetService.updateWidget(this.widgetId, widget);
-        if (updateWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.updateWidget(this.widgetId, widget)
+            .subscribe(function (updateWidget) {
+            if (updateWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     WidgetHtmlComponent.prototype.delete = function (widgetId) {
-        var deletedWidget = this.widgetService.deleteWidget(widgetId);
-        if (deletedWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.deleteWidget(widgetId)
+            .subscribe(function (deletedWidget) {
+            if (deletedWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     return WidgetHtmlComponent;
 }());
@@ -1475,7 +1496,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-image/widget-image.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form method=\"post\" id=\"editImageForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [(ngModel)]=\"widget.widgetType\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [(ngModel)]=\"widget.text\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>URL</label>\r\n      <input type=\"text\" placeholder=\"URL\" name=\"url\" [(ngModel)]=\"widget.url\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Width</label>\r\n      <select name=\"width\" [(ngModel)]=\"widget.width\">\r\n        <option [value]=\"20\" [selected]=\"widget.width == '20'\">20%</option>\r\n        <option [value]=\"40\" [selected]=\"widget.width == '40'\">40%</option>\r\n        <option [value]=\"60\" [selected]=\"widget.width == '60'\">60%</option>\r\n        <option [value]=\"80\" [selected]=\"widget.width == '80'\">80%</option>\r\n        <option [value]=\"100\" [selected]=\"widget.width == '100'\">100%</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <!-- <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Upload</label>\r\n      <input type=\"file\" />\r\n      <div class=\"grid-x grid-padding-x\">\r\n        <div class=\"large-2 medium-2 cell\">\r\n          <a routerLink=\"/user/123/website/123/page/123/widget\" class=\"button deleteBtnColor\">Upload Image</a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div> -->\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Image</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Image</a>\r\n    </div>\r\n  </div>\r\n</form>"
+module.exports = "<form method=\"post\" id=\"editImageForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [ngModel]=\"widget?.widgetType\" (ngModelChange)=\"widget.widgetType = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [ngModel]=\"widget?.text\" (ngModelChange)=\"widget.text = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>URL</label>\r\n      <input type=\"text\" placeholder=\"URL\" name=\"url\" [ngModel]=\"widget?.url\" (ngModelChange)=\"widget.url = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Width</label>\r\n      <select name=\"width\" [ngModel]=\"widget?.width\" (ngModelChange)=\"widget.width = $event\">\r\n        <option [value]=\"20\" [selected]=\"widget?.width == '20'\">20%</option>\r\n        <option [value]=\"40\" [selected]=\"widget?.width == '40'\">40%</option>\r\n        <option [value]=\"60\" [selected]=\"widget?.width == '60'\">60%</option>\r\n        <option [value]=\"80\" [selected]=\"widget?.width == '80'\">80%</option>\r\n        <option [value]=\"100\" [selected]=\"widget?.width == '100'\">100%</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <!-- <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Upload</label>\r\n      <input type=\"file\" />\r\n      <div class=\"grid-x grid-padding-x\">\r\n        <div class=\"large-2 medium-2 cell\">\r\n          <a routerLink=\"/user/123/website/123/page/123/widget\" class=\"button deleteBtnColor\">Upload Image</a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div> -->\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Image</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Image</a>\r\n    </div>\r\n  </div>\r\n</form>"
 
 /***/ }),
 
@@ -1513,19 +1534,28 @@ var WidgetImageComponent = (function () {
             _this.pageId = params['pageId'];
             _this.widgetId = params['widgetId'];
         });
-        this.widget = this.widgetService.findWidgetById(this.widgetId);
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+        });
     };
     WidgetImageComponent.prototype.update = function (widget) {
-        var updateWidget = this.widgetService.updateWidget(this.widgetId, widget);
-        if (updateWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.updateWidget(this.widgetId, widget)
+            .subscribe(function (updateWidget) {
+            if (updateWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     WidgetImageComponent.prototype.delete = function (widgetId) {
-        var deletedWidget = this.widgetService.deleteWidget(widgetId);
-        if (deletedWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.deleteWidget(widgetId)
+            .subscribe(function (deletedWidget) {
+            if (deletedWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     return WidgetImageComponent;
 }());
@@ -1564,7 +1594,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-youtube/widget-youtube.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form method=\"post\" id=\"editYoutubeForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [(ngModel)]=\"widget.widgetType\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [(ngModel)]=\"widget.text\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>URL</label>\r\n      <input type=\"text\" placeholder=\"URL\" name=\"url\" [(ngModel)]=\"widget.url\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Width</label>\r\n      <select name=\"width\" [(ngModel)]=\"widget.width\">\r\n        <option [value]=\"20\" [selected]=\"widget.width == '20'\">20%</option>\r\n        <option [value]=\"40\" [selected]=\"widget.width == '40'\">40%</option>\r\n        <option [value]=\"60\" [selected]=\"widget.width == '60'\">60%</option>\r\n        <option [value]=\"80\" [selected]=\"widget.width == '80'\">80%</option>\r\n        <option [value]=\"100\" [selected]=\"widget.width == '100'\">100%</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Youtube</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Youtube</a>\r\n    </div>\r\n  </div>\r\n</form>"
+module.exports = "<form method=\"post\" id=\"editYoutubeForm\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Widget Type</label>\r\n      <input type=\"text\" placeholder=\"Widget Type\" disabled name=\"widgetType\" [ngModel]=\"widget?.widgetType\" (ngModelChange)=\"widget.widgetType = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Text</label>\r\n      <input type=\"text\" placeholder=\"Text\" name=\"text\" [ngModel]=\"widget?.text\" (ngModelChange)=\"widget.text = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>URL</label>\r\n      <input type=\"text\" placeholder=\"URL\" name=\"url\" [ngModel]=\"widget?.url\" (ngModelChange)=\"widget.url = $event\" />\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <label>Width</label>\r\n      <select name=\"width\" [ngModel]=\"widget?.width\" (ngModelChange)=\"widget.width = $event\">\r\n        <option [value]=\"20\" [selected]=\"widget?.width == '20'\">20%</option>\r\n        <option [value]=\"40\" [selected]=\"widget?.width == '40'\">40%</option>\r\n        <option [value]=\"60\" [selected]=\"widget?.width == '60'\">60%</option>\r\n        <option [value]=\"80\" [selected]=\"widget?.width == '80'\">80%</option>\r\n        <option [value]=\"100\" [selected]=\"widget?.width == '100'\">100%</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"update(widget)\" class=\"button customBtnColor\">Update Youtube</a>\r\n    </div>\r\n    <div class=\"large-2 medium-2 cell\">\r\n      <a (click)=\"delete(widget._id)\" class=\"button customBtnColor\">Delete Youtube</a>\r\n    </div>\r\n  </div>\r\n</form>"
 
 /***/ }),
 
@@ -1602,19 +1632,28 @@ var WidgetYoutubeComponent = (function () {
             _this.pageId = params['pageId'];
             _this.widgetId = params['widgetId'];
         });
-        this.widget = this.widgetService.findWidgetById(this.widgetId);
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+        });
     };
     WidgetYoutubeComponent.prototype.update = function (widget) {
-        var updateWidget = this.widgetService.updateWidget(this.widgetId, widget);
-        if (updateWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.updateWidget(this.widgetId, widget)
+            .subscribe(function (updateWidget) {
+            if (updateWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     WidgetYoutubeComponent.prototype.delete = function (widgetId) {
-        var deletedWidget = this.widgetService.deleteWidget(widgetId);
-        if (deletedWidget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.widgetId + '/page/' + this.pageId + '/widget']);
-        }
+        var _this = this;
+        this.widgetService.deleteWidget(widgetId)
+            .subscribe(function (deletedWidget) {
+            if (deletedWidget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.widgetId + '/page/' + _this.pageId + '/widget']);
+            }
+        });
     };
     return WidgetYoutubeComponent;
 }());
@@ -1653,7 +1692,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-list/widget-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Widgets\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"top-bar-right\">\r\n      <ul class=\"menu text-right\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/choose\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <div *ngFor=\"let widget of widgets\">\r\n            <div [ngSwitch]=\"widget.widgetType\" class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'HEADING'\">\r\n                <h1>{{widget.text}}</h1>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'HTML'\">\r\n                <div [innerHTML]=\"widget.text\"></div>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'IMAGE'\">\r\n                <p><img [src]=\"widget.url\" [style.width.%]=\"widget.width\" /></p>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'YOUTUBE'\">\r\n                <p>\r\n                  <iframe [style.width.%]=\"widget.width\" height=\"450\" [src]=\"sanitizer.bypassSecurityTrustResourceUrl(widget.url)\" frameborder=\"0\" allowfullscreen></iframe>\r\n                </p>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
+module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Widgets\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"top-bar-right\">\r\n      <ul class=\"menu text-right\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/choose\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <div *ngFor=\"let widget of widgets\">\r\n            <div [ngSwitch]=\"widget.widgetType\" class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'HEADING'\">\r\n                <h1 *ngIf=\"widget.size == 1\">{{widget.text}}</h1>\r\n                <h2 *ngIf=\"widget.size == 2\">{{widget.text}}</h2>\r\n                <h3 *ngIf=\"widget.size == 3\">{{widget.text}}</h3>\r\n                <h4 *ngIf=\"widget.size == 4\">{{widget.text}}</h4>\r\n                <h5 *ngIf=\"widget.size == 5\">{{widget.text}}</h5>\r\n                <h6 *ngIf=\"widget.size == 6\">{{widget.text}}</h6>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'HTML'\">\r\n                <div [innerHTML]=\"widget.text\"></div>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'IMAGE'\">\r\n                <p><img [src]=\"widget.url\" [style.width.%]=\"widget.width\" /></p>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n              <div class=\"large-12 cell widgets\" *ngSwitchCase=\"'YOUTUBE'\">\r\n                <p>\r\n                  <iframe [style.width.%]=\"widget.width\" height=\"450\" [src]=\"sanitizer.bypassSecurityTrustResourceUrl(widget.url)\" frameborder=\"0\" allowfullscreen></iframe>\r\n                </p>\r\n                <div class=\"icons\">\r\n                  <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n                  <a routerLink=\"\"><i class=\"fa fa-bars\" aria-hidden=\"true\"></i></a>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
 
 /***/ }),
 
@@ -1694,7 +1733,10 @@ var WidgetListComponent = (function () {
             _this.websiteId = params['websiteId'];
             _this.pageId = params['pageId'];
         });
-        this.widgets = this.widgetService.findWidgetsByPageId(this.pageId);
+        this.widgetService.findWidgetsByPageId(this.pageId)
+            .subscribe(function (widgets) {
+            _this.widgets = widgets;
+        });
     };
     return WidgetListComponent;
 }());
@@ -1788,6 +1830,7 @@ var WidgetHeaderNewComponent = (function () {
         }
     };
     WidgetHeaderNewComponent.prototype.createHeader = function () {
+        var _this = this;
         this.text = this.headerForm.value.text;
         this.size = this.headerForm.value.size;
         this.widget['widgetType'] = this.widgetName;
@@ -1795,10 +1838,12 @@ var WidgetHeaderNewComponent = (function () {
         this.widget['size'] = this.size;
         this.widget['width'] = null;
         this.widget['url'] = null;
-        var widget = this.widgetService.createWidget(this.pageId, this.widget);
-        if (widget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget/']);
-        }
+        this.widgetService.createWidget(this.pageId, this.widget)
+            .subscribe(function (widget) {
+            if (widget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/' + _this.pageId + '/widget/']);
+            }
+        });
     };
     return WidgetHeaderNewComponent;
 }());
@@ -1896,16 +1941,19 @@ var WidgetHtmlNewComponent = (function () {
         }
     };
     WidgetHtmlNewComponent.prototype.createHtml = function () {
+        var _this = this;
         this.text = this.htmlForm.value.text;
         this.widget['widgetType'] = this.widgetName;
         this.widget['text'] = this.text;
         this.widget['size'] = null;
         this.widget['width'] = null;
         this.widget['url'] = null;
-        var widget = this.widgetService.createWidget(this.pageId, this.widget);
-        if (widget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget/']);
-        }
+        this.widgetService.createWidget(this.pageId, this.widget)
+            .subscribe(function (widget) {
+            if (widget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/' + _this.pageId + '/widget/']);
+            }
+        });
     };
     return WidgetHtmlNewComponent;
 }());
@@ -2003,6 +2051,7 @@ var WidgetImageNewComponent = (function () {
         }
     };
     WidgetImageNewComponent.prototype.createImage = function () {
+        var _this = this;
         this.text = this.imageForm.value.text;
         this.url = this.imageForm.value.url;
         this.width = this.imageForm.value.width;
@@ -2011,10 +2060,12 @@ var WidgetImageNewComponent = (function () {
         this.widget['size'] = null;
         this.widget['width'] = this.width;
         this.widget['url'] = this.url;
-        var widget = this.widgetService.createWidget(this.pageId, this.widget);
-        if (widget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget/']);
-        }
+        this.widgetService.createWidget(this.pageId, this.widget)
+            .subscribe(function (widget) {
+            if (widget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/' + _this.pageId + '/widget/']);
+            }
+        });
     };
     return WidgetImageNewComponent;
 }());
@@ -2196,6 +2247,7 @@ var WidgetYoutubeNewComponent = (function () {
         }
     };
     WidgetYoutubeNewComponent.prototype.createYoutube = function () {
+        var _this = this;
         this.text = this.youtubeForm.value.text;
         this.url = this.youtubeForm.value.url;
         this.width = this.youtubeForm.value.width;
@@ -2204,10 +2256,12 @@ var WidgetYoutubeNewComponent = (function () {
         this.widget['size'] = null;
         this.widget['width'] = this.width;
         this.widget['url'] = this.url;
-        var widget = this.widgetService.createWidget(this.pageId, this.widget);
-        if (widget) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget/']);
-        }
+        this.widgetService.createWidget(this.pageId, this.widget)
+            .subscribe(function (widget) {
+            if (widget) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/' + _this.pageId + '/widget/']);
+            }
+        });
     };
     return WidgetYoutubeNewComponent;
 }());
@@ -2482,8 +2536,10 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2491,11 +2547,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 
 // injecting service into module
 var WidgetService = (function () {
-    function WidgetService() {
+    function WidgetService(http) {
+        this.http = http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.widgets = [
             { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": "2", "text": "GIZMODO", "width": null, "url": null },
             { "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": "4", "text": "Lorem ipsum", "width": null, "url": null },
@@ -2514,73 +2577,43 @@ var WidgetService = (function () {
         };
     }
     WidgetService.prototype.createWidget = function (pageId, widget) {
-        var length = this.widgets.length;
-        widget._id = (length + 1).toString();
-        widget.pageId = pageId;
-        this.widgets.push(widget);
-        return widget;
+        return this.http.post(this.baseUrl + '/api/page/' + pageId + '/widget', widget)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.findWidgetsByPageId = function (pageId) {
-        var widgetList = [];
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x].pageId === pageId) {
-                widgetList.push(this.widgets[x]);
-            }
-        }
-        return widgetList;
+        return this.http.get(this.baseUrl + '/api/page/' + pageId + '/widget')
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.findWidgetById = function (widgetId) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                return this.widgets[x];
-            }
-        }
+        return this.http.get(this.baseUrl + '/api/widget/' + widgetId)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.updateWidget = function (widgetId, widget) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                if (this.widgets[x].widgetType == 'HEADING') {
-                    this.widgets[x].text = widget.text;
-                    this.widgets[x].size = widget.size;
-                    this.widgets[x].width = null;
-                    this.widgets[x].url = null;
-                }
-                else if (this.widgets[x].widgetType == 'HTML') {
-                    this.widgets[x].text = widget.text;
-                    this.widgets[x].size = null;
-                    this.widgets[x].width = null;
-                    this.widgets[x].url = null;
-                }
-                else if (this.widgets[x].widgetType == 'IMAGE') {
-                    this.widgets[x].width = widget.width;
-                    this.widgets[x].url = widget.url;
-                    this.widgets[x].text = widget.text;
-                    this.widgets[x].size = null;
-                }
-                else if (this.widgets[x].widgetType == 'YOUTUBE') {
-                    this.widgets[x].width = widget.width;
-                    this.widgets[x].url = widget.url;
-                    this.widgets[x].text = widget.text;
-                    this.widgets[x].size = null;
-                }
-            }
-            return this.widgets[x];
-        }
+        return this.http.put(this.baseUrl + '/api/widget/' + widgetId, widget)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.deleteWidget = function (widgetId) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                this.widgets.splice(x, 1);
-                return true;
-            }
-        }
+        return this.http.delete(this.baseUrl + '/api/widget/' + widgetId)
+            .map(function (response) {
+            return {};
+        });
     };
     return WidgetService;
 }());
 WidgetService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], WidgetService);
 
+var _a;
 //# sourceMappingURL=widget.service.client.js.map
 
 /***/ }),

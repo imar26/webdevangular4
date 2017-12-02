@@ -2,13 +2,13 @@
   <div class="grid-x grid-padding-x">
     <div class="large-12 cell">
       <label>Widget Type</label>
-      <input type="text" placeholder="Widget Type" disabled name="widgetType" [(ngModel)]="widget.widgetType" />
+      <input type="text" placeholder="Widget Type" disabled name="widgetType" [ngModel]="widget?.widgetType" (ngModelChange)="widget.widgetType = $event" />
     </div>
   </div>
   <div class="grid-x grid-padding-x">
     <div class="large-12 cell">
       <label>Text</label>
-      <input type="text" placeholder="Text" name="text" [(ngModel)]="widget.text" />
+      <input type="text" placeholder="Text" name="text" [ngModel]="widget?.text" (ngModelChange)="widget.text = $event" />
     </div>
   </div>
   <div class="grid-x grid-padding-x">

@@ -14,7 +14,7 @@
       <div class="large-12 cell">
         <div class="stdPadding">
           <div class="callout">
-            <div [ngSwitch]="widget.widgetType">
+            <div [ngSwitch]="widget?.widgetType">
               <div *ngSwitchCase="'HEADING'">
                 <app-widget-header></app-widget-header>
               </div>

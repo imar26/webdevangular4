@@ -26,21 +26,28 @@ export class WidgetHtmlComponent implements OnInit {
       }
     );
 
-    this.widget = this.widgetService.findWidgetById(this.widgetId);
+    this.widgetService.findWidgetById(this.widgetId)
+      .subscribe((widget) => {
+        this.widget = widget;
+      });
   }
 
   update(widget) {
-    let updateWidget = this.widgetService.updateWidget(this.widgetId, widget);
-    if(updateWidget) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.widgetId+'/page/'+this.pageId+'/widget']);
-    }
+    this.widgetService.updateWidget(this.widgetId, widget)
+      .subscribe((updateWidget) => {
+        if(updateWidget) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.widgetId+'/page/'+this.pageId+'/widget']);
+        }
+      });
   }
 
   delete(widgetId) {
-    let deletedWidget = this.widgetService.deleteWidget(widgetId);
-    if(deletedWidget) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.widgetId+'/page/'+this.pageId+'/widget']);
-    }
+    this.widgetService.deleteWidget(widgetId)
+      .subscribe((deletedWidget) => {
+        if(deletedWidget) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.widgetId+'/page/'+this.pageId+'/widget']);
+        }
+      });
   }
 
 }

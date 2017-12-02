@@ -27,17 +27,19 @@ export class WidgetEditComponent implements OnInit {
       }
     );
     
-    this.widget = this.widgetService.findWidgetById(this.widgetId);
-    
-    if(this.widget['widgetType'] == 'HEADING') {
-      this.widgetName = 'header';
-    } else if(this.widget['widgetType'] == 'HTML') {
-      this.widgetName = 'html';
-    } else if(this.widget['widgetType'] == 'IMAGE') {
-      this.widgetName = 'image';
-    } else if(this.widget['widgetType'] == 'YOUTUBE') {
-      this.widgetName = 'youtube';
-    }
+    this.widgetService.findWidgetById(this.widgetId)
+      .subscribe((widget) => {
+        this.widget = widget;
+        if(this.widget['widgetType'] == 'HEADING') {
+          this.widgetName = 'header';
+        } else if(this.widget['widgetType'] == 'HTML') {
+          this.widgetName = 'html';
+        } else if(this.widget['widgetType'] == 'IMAGE') {
+          this.widgetName = 'image';
+        } else if(this.widget['widgetType'] == 'YOUTUBE') {
+          this.widgetName = 'youtube';
+        }
+      });    
   }
 
 }

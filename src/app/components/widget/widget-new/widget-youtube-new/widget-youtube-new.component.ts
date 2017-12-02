@@ -55,10 +55,12 @@ export class WidgetYoutubeNewComponent implements OnInit {
     this.widget['width'] = this.width;
     this.widget['url'] = this.url;
 
-    let widget = this.widgetService.createWidget(this.pageId, this.widget);
-    if(widget) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/'+this.pageId+'/widget/']);
-    }
+    this.widgetService.createWidget(this.pageId, this.widget)
+      .subscribe((widget) => {
+        if(widget) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/'+this.pageId+'/widget/']);
+        }
+      });  
   }
 
 }

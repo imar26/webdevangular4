@@ -51,10 +51,12 @@ export class WidgetHtmlNewComponent implements OnInit {
     this.widget['width'] = null;
     this.widget['url'] = null;
 
-    let widget = this.widgetService.createWidget(this.pageId, this.widget);
-    if(widget) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/'+this.pageId+'/widget/']);
-    }
+    this.widgetService.createWidget(this.pageId, this.widget)
+      .subscribe((widget) => {
+        if(widget) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/'+this.pageId+'/widget/']);
+        }
+      });  
   }
 
 }

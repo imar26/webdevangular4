@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class WidgetService {
+	constructor(private http: Http){}
+	baseUrl = environment.baseUrl;
 	widgets = [
 	 	{ "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": "2", "text": "GIZMODO", "width": null, "url": null},
 	 	{ "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": "4", "text": "Lorem ipsum", "width": null, "url": null},
@@ -27,66 +29,37 @@ export class WidgetService {
 	};
 
 	createWidget(pageId: string, widget: any) {
-		let length = this.widgets.length;
-		widget._id = (length + 1).toString();
-		widget.pageId = pageId;
-		this.widgets.push(widget);
-		return widget;
+		return this.http.post(this.baseUrl + '/api/page/' + pageId + '/widget', widget)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
 	findWidgetsByPageId(pageId: string) {
-		var widgetList = [];
-		for (let x=0; x < this.widgets.length; x++) {
-			if(this.widgets[x].pageId === pageId) {
-				widgetList.push(this.widgets[x]);
-			}
-		}
-		return widgetList;
+		return this.http.get(this.baseUrl + '/api/page/' + pageId + '/widget')
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
 	findWidgetById(widgetId: string) {
-		for (let x=0; x < this.widgets.length; x++) {
-			if(this.widgets[x]._id === widgetId) {
-				return this.widgets[x];
-			}
-		}
+		return this.http.get(this.baseUrl + '/api/widget/' + widgetId)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
 	updateWidget(widgetId: string, widget: any) {
-		for (let x=0; x < this.widgets.length; x++) {
-			if(this.widgets[x]._id === widgetId) {
-				if(this.widgets[x].widgetType == 'HEADING') {
-					this.widgets[x].text = widget.text;
-					this.widgets[x].size = widget.size;
-					this.widgets[x].width = null;					
-					this.widgets[x].url = null;
-				} else if(this.widgets[x].widgetType == 'HTML') {
-					this.widgets[x].text = widget.text;
-					this.widgets[x].size = null;
-					this.widgets[x].width = null;					
-					this.widgets[x].url = null;
-				} else if(this.widgets[x].widgetType == 'IMAGE') {
-					this.widgets[x].width = widget.width;					
-					this.widgets[x].url = widget.url;	
-					this.widgets[x].text = widget.text;					
-					this.widgets[x].size = null;				
-				} else if(this.widgets[x].widgetType == 'YOUTUBE') {
-					this.widgets[x].width = widget.width;					
-					this.widgets[x].url = widget.url;
-					this.widgets[x].text = widget.text;					
-					this.widgets[x].size = null;
-				}
-			}
-			return this.widgets[x];
-		}
+		return this.http.put(this.baseUrl + '/api/widget/' + widgetId, widget)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
 	deleteWidget(widgetId: string) {
-		for (let x=0; x < this.widgets.length; x++) {
-			if(this.widgets[x]._id === widgetId) {
-				this.widgets.splice(x,1);
-				return true;
-			}
-		}
+		return this.http.delete(this.baseUrl + '/api/widget/' + widgetId)
+			.map((response: Response) => {
+				return {};
+			});
 	}
 }
