@@ -292,7 +292,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/page/page-edit/page-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit Page\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <form method=\"post\" id=\"editPageForm\">\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Name</label>\r\n                <input type=\"text\" placeholder=\"Blog Post\" [(ngModel)]=\"page.name\" name=\"name\" />\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Description</label>\r\n                <textarea rows=\"3\" [(ngModel)]=\"page.description\" name=\"description\"></textarea>\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"update(page)\" class=\"button customBtnColor\">Update Page</a>\r\n              </div>\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"delete(page._id)\" class=\"button customBtnColor\">Delete Page</a>\r\n              </div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
+module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/{{websiteId}}/page\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit Page\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <form method=\"post\" id=\"editPageForm\">\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Name</label>\r\n                <input type=\"text\" placeholder=\"Blog Post\" [ngModel]=\"page?.name\" (ngModelChange)=\"page.name = $event\" name=\"name\" />\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Description</label>\r\n                <textarea rows=\"3\" [ngModel]=\"page?.description\" (ngModelChange)=\"page.description = $event\" name=\"description\"></textarea>\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"update(page)\" class=\"button customBtnColor\">Update Page</a>\r\n              </div>\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"delete(page._id)\" class=\"button customBtnColor\">Delete Page</a>\r\n              </div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
 
 /***/ }),
 
@@ -329,19 +329,28 @@ var PageEditComponent = (function () {
             _this.websiteId = params['websiteId'];
             _this.pageId = params['pageId'];
         });
-        this.page = this.pageService.findPageById(this.pageId);
+        this.pageService.findPageById(this.pageId)
+            .subscribe(function (page) {
+            _this.page = page;
+        });
     };
     PageEditComponent.prototype.update = function (page) {
-        var updatePage = this.pageService.updatePage(this.pageId, page);
-        if (updatePage) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/']);
-        }
+        var _this = this;
+        this.pageService.updatePage(this.pageId, page)
+            .subscribe(function (updatePage) {
+            if (updatePage) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/']);
+            }
+        });
     };
     PageEditComponent.prototype.delete = function (pageId) {
-        var deletedPage = this.pageService.deletePage(pageId);
-        if (deletedPage) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/']);
-        }
+        var _this = this;
+        this.pageService.deletePage(pageId)
+            .subscribe(function (deletedPage) {
+            if (deletedPage) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/']);
+            }
+        });
     };
     return PageEditComponent;
 }());
@@ -416,7 +425,10 @@ var PageListComponent = (function () {
             _this.userId = params['userId'];
             _this.websiteId = params['websiteId'];
         });
-        this.pages = this.pageService.findPageByWebsiteId(this.websiteId);
+        this.pageService.findPageByWebsiteId(this.websiteId)
+            .subscribe(function (pages) {
+            _this.pages = pages;
+        });
     };
     return PageListComponent;
 }());
@@ -496,14 +508,17 @@ var PageNewComponent = (function () {
         });
     };
     PageNewComponent.prototype.createPage = function () {
+        var _this = this;
         this.name = this.pageForm.value.name;
         this.description = this.pageForm.value.description;
         this.page['name'] = this.name;
         this.page['description'] = this.description;
-        var page = this.pageService.createPage(this.websiteId, this.page);
-        if (page) {
-            this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/']);
-        }
+        this.pageService.createPage(this.websiteId, this.page)
+            .subscribe(function (page) {
+            if (page) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/' + _this.websiteId + '/page/']);
+            }
+        });
     };
     return PageNewComponent;
 }());
@@ -843,7 +858,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/website/website-edit/website-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit Website\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <form method=\"post\" id=\"editWebsiteForm\">\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Name</label>\r\n                <input type=\"text\" placeholder=\"Blogger\" [(ngModel)]=\"website.name\" name=\"name\" />\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Description</label>\r\n                <textarea rows=\"3\" [(ngModel)]=\"website.description\" name=\"description\"></textarea>\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"update(website)\" class=\"button customBtnColor\">Update Website</a>\r\n              </div>\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"delete(website._id)\" class=\"button customBtnColor\">Delete Website</a>\r\n              </div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
+module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Edit Website\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <form method=\"post\" id=\"editWebsiteForm\">\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Name</label>\r\n                <input type=\"text\" placeholder=\"Blogger\" [ngModel]=\"website?.name\" (ngModelChange)=\"website.name = $event\" name=\"name\" />\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-12 cell\">\r\n                <label>Description</label>\r\n                <textarea rows=\"3\" [ngModel]=\"website?.description\" (ngModelChange)=\"website.description = $event\" name=\"description\"></textarea>\r\n              </div>\r\n            </div>\r\n            <div class=\"grid-x grid-padding-x\">\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"update(website)\" class=\"button customBtnColor\">Update Website</a>\r\n              </div>\r\n              <div class=\"large-2 medium-2 cell\">\r\n                <a (click)=\"delete(website._id)\" class=\"button customBtnColor\">Delete Website</a>\r\n              </div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
 
 /***/ }),
 
@@ -879,19 +894,28 @@ var WebsiteEditComponent = (function () {
             _this.userId = params['userId'];
             _this.websiteId = params['websiteId'];
         });
-        this.website = this.websiteService.findWebsiteById(this.websiteId);
+        this.websiteService.findWebsiteById(this.websiteId)
+            .subscribe(function (website) {
+            _this.website = website;
+        });
     };
     WebsiteEditComponent.prototype.update = function (website) {
-        var updateWebsite = this.websiteService.updateWebsite(this.websiteId, website);
-        if (updateWebsite) {
-            this.router.navigate(['/user/' + this.userId + '/website/']);
-        }
+        var _this = this;
+        this.websiteService.updateWebsite(this.websiteId, website)
+            .subscribe(function (updateWebsite) {
+            if (updateWebsite) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/']);
+            }
+        });
     };
     WebsiteEditComponent.prototype.delete = function (websiteId) {
-        var deletedWebsite = this.websiteService.deleteWebsite(websiteId);
-        if (deletedWebsite) {
-            this.router.navigate(['/user/' + this.userId + '/website/']);
-        }
+        var _this = this;
+        this.websiteService.deleteWebsite(websiteId)
+            .subscribe(function (deletedWebsite) {
+            if (deletedWebsite) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/']);
+            }
+        });
     };
     return WebsiteEditComponent;
 }());
@@ -930,7 +954,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/website/website-list/website-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Websites\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"top-bar-right\">\r\n      <ul class=\"menu text-right\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/new\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <div class=\"grid-x grid-padding-x\">\r\n            <div class=\"large-3 cell\">\r\n              <h3>Website Name</h3>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <h3>Created On</h3>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <h3>Created By</h3>\r\n            </div>\r\n            <div class=\"large-3 cell clearfix text-right\">\r\n              <h3>Action</h3>\r\n            </div>\r\n          </div>\r\n          <div class=\"grid-x grid-padding-x\" *ngFor=\"let website of websites\">\r\n            <div class=\"large-3 cell\">\r\n              <p><a routerLink=\"/user/{{website.developerId}}/website/{{website._id}}/page\">{{website.name}}</a></p>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <p>{{website.createdOn | date:'shortDate'}}</p>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <p>{{user.firstName}} {{user.lastName}}</p>\r\n            </div>\r\n            <div class=\"large-3 cell clearfix text-right\">\r\n              <a routerLink=\"/user/{{website.developerId}}/website/{{website._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
+module.exports = "<header>\r\n  <div class=\"top-bar\">\r\n    <div class=\"top-bar-left\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a> Websites\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"top-bar-right\">\r\n      <ul class=\"menu text-right\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}/website/new\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</header>\r\n<div class=\"grid-container\">\r\n  <div class=\"grid-x grid-padding-x\">\r\n    <div class=\"large-12 cell\">\r\n      <div class=\"stdPadding\">\r\n        <div class=\"callout\">\r\n          <div class=\"grid-x grid-padding-x\">\r\n            <div class=\"large-3 cell\">\r\n              <h3>Website Name</h3>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <h3>Created On</h3>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <h3>Created By</h3>\r\n            </div>\r\n            <div class=\"large-3 cell clearfix text-right\">\r\n              <h3>Action</h3>\r\n            </div>\r\n          </div>\r\n          <div class=\"grid-x grid-padding-x\" *ngFor=\"let website of websites\">\r\n            <div class=\"large-3 cell\">\r\n              <p><a routerLink=\"/user/{{website.developerId}}/website/{{website._id}}/page\">{{website.name}}</a></p>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <p>{{website.createdOn | date:'shortDate'}}</p>\r\n            </div>\r\n            <div class=\"large-3 cell\">\r\n              <p>{{user?.firstName}} {{user?.lastName}}</p>\r\n            </div>\r\n            <div class=\"large-3 cell clearfix text-right\">\r\n              <a routerLink=\"/user/{{website.developerId}}/website/{{website._id}}\"><i class=\"fa fa-cog\" aria-hidden=\"true\"></i></a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n<footer>\r\n  <div class=\"bottom-bar\">\r\n    <div class=\"bottom-bar-right\">\r\n      <ul class=\"menu\">\r\n        <li>\r\n          <a routerLink=\"/user/{{userId}}\"><i class=\"fa fa-user\" aria-hidden=\"true\"></i></a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</footer>\r\n"
 
 /***/ }),
 
@@ -968,10 +992,16 @@ var WebsiteListComponent = (function () {
         this.activatedRoute.params.subscribe(function (params) {
             _this.userId = params['userId'];
         });
-        this.websites = this.websiteService.findWebsitesByUser(this.userId);
-        if (this.websites) {
-            this.user = this.userService.findUserById(this.userId);
-        }
+        this.websiteService.findWebsitesByUser(this.userId)
+            .subscribe(function (websites) {
+            _this.websites = websites;
+            if (_this.websites) {
+                _this.userService.findUserById(_this.userId)
+                    .subscribe(function (user) {
+                    _this.user = user;
+                });
+            }
+        });
     };
     return WebsiteListComponent;
 }());
@@ -1051,17 +1081,20 @@ var WebsiteNewComponent = (function () {
         this.errorMsg = "Website could not be created successfully.";
     };
     WebsiteNewComponent.prototype.createWebsite = function () {
+        var _this = this;
         this.name = this.websiteForm.value.name;
         this.description = this.websiteForm.value.description;
         this.website['name'] = this.name;
         this.website['description'] = this.description;
-        var website = this.websiteService.createWebsite(this.userId, this.website);
-        if (website) {
-            this.router.navigate(['/user/' + this.userId + '/website/']);
-        }
-        else {
-            this.errorFlag = true;
-        }
+        this.websiteService.createWebsite(this.userId, this.website)
+            .subscribe(function (website) {
+            if (website) {
+                _this.router.navigate(['/user/' + _this.userId + '/website/']);
+            }
+            else {
+                _this.errorFlag = true;
+            }
+        });
     };
     return WebsiteNewComponent;
 }());
@@ -2201,8 +2234,10 @@ var _a, _b, _c, _d;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PageService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2210,11 +2245,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 
 // injecting service into module
 var PageService = (function () {
-    function PageService() {
+    function PageService(http) {
+        this.http = http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.pages = [
             { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
             { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
@@ -2229,51 +2271,43 @@ var PageService = (function () {
         };
     }
     PageService.prototype.createPage = function (websiteId, page) {
-        var length = this.pages.length;
-        page._id = (length + 1).toString();
-        page.websiteId = websiteId;
-        this.pages.push(page);
-        return page;
+        return this.http.post(this.baseUrl + '/api/website/' + websiteId + '/page', page)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.findPageByWebsiteId = function (websiteId) {
-        var pagesList = [];
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x].websiteId === websiteId) {
-                pagesList.push(this.pages[x]);
-            }
-        }
-        return pagesList;
+        return this.http.get(this.baseUrl + '/api/website/' + websiteId + '/page')
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.findPageById = function (pageId) {
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x]._id === pageId) {
-                return this.pages[x];
-            }
-        }
+        return this.http.get(this.baseUrl + '/api/page/' + pageId)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.updatePage = function (pageId, page) {
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x]._id === pageId) {
-                this.pages[x].name = page.name;
-                this.pages[x].description = page.description;
-            }
-            return this.pages[x];
-        }
+        return this.http.put(this.baseUrl + '/api/page/' + pageId, page)
+            .map(function (response) {
+            return response.json();
+        });
     };
     PageService.prototype.deletePage = function (pageId) {
-        for (var x = 0; x < this.pages.length; x++) {
-            if (this.pages[x]._id === pageId) {
-                this.pages.splice(x, 1);
-                return true;
-            }
-        }
+        return this.http.delete(this.baseUrl + '/api/page/' + pageId)
+            .map(function (response) {
+            return {};
+        });
     };
     return PageService;
 }());
 PageService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], PageService);
 
+var _a;
 //# sourceMappingURL=page.service.client.js.map
 
 /***/ }),
@@ -2306,12 +2340,6 @@ var UserService = (function () {
     function UserService(http) {
         this.http = http;
         this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
-        this.users = [
-            { _id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder", email: "" },
-            { _id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley", email: "" },
-            { _id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia", email: "" },
-            { _id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi", email: "" }
-        ];
         this.api = {
             'createUser': this.createUser,
             'findUserById': this.findUserById,
@@ -2376,8 +2404,10 @@ var _a;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsiteService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2385,20 +2415,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 
 // injecting service into module
 var WebsiteService = (function () {
-    function WebsiteService() {
-        this.websites = [
-            { "_id": "123", "name": "Facebook", "developerId": "456", "description": "Lorem", "createdOn": "1/2/2017" },
-            { "_id": "234", "name": "Tweeter", "developerId": "456", "description": "Lorem", "createdOn": "1/2/2017" },
-            { "_id": "456", "name": "Gizmodo", "developerId": "456", "description": "Lorem", "createdOn": "1/2/2017" },
-            { "_id": "890", "name": "Go", "developerId": "123", "description": "Lorem", "createdOn": "1/2/2017" },
-            { "_id": "567", "name": "Tic Tac Toe", "developerId": "123", "description": "Lorem", "createdOn": "1/2/2017" },
-            { "_id": "678", "name": "Checkers", "developerId": "123", "description": "Lorem", "createdOn": "1/2/2017" },
-            { "_id": "789", "name": "Chess", "developerId": "234", "description": "Lorem", "createdOn": "1/2/2017" }
-        ];
+    function WebsiteService(http) {
+        this.http = http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.api = {
             'createWebsite': this.createWebsite,
             'findWebsitesByUser': this.findWebsitesByUser,
@@ -2408,52 +2436,43 @@ var WebsiteService = (function () {
         };
     }
     WebsiteService.prototype.createWebsite = function (userId, website) {
-        var length = this.websites.length;
-        website._id = (length + 1).toString();
-        website.developerId = userId;
-        website.createdOn = Date.now();
-        this.websites.push(website);
-        return website;
+        return this.http.post(this.baseUrl + '/api/user/' + userId + '/website', website)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WebsiteService.prototype.findWebsitesByUser = function (userId) {
-        var listWebsites = [];
-        for (var x = 0; x < this.websites.length; x++) {
-            if (this.websites[x].developerId === userId) {
-                listWebsites.push(this.websites[x]);
-            }
-        }
-        return listWebsites;
+        return this.http.get(this.baseUrl + '/api/user/' + userId + '/website')
+            .map(function (response) {
+            return response.json();
+        });
     };
     WebsiteService.prototype.findWebsiteById = function (websiteId) {
-        for (var x = 0; x < this.websites.length; x++) {
-            if (this.websites[x]._id === websiteId) {
-                return this.websites[x];
-            }
-        }
+        return this.http.get(this.baseUrl + '/api/website/' + websiteId)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WebsiteService.prototype.updateWebsite = function (websiteId, website) {
-        for (var x = 0; x < this.websites.length; x++) {
-            if (this.websites[x]._id === websiteId) {
-                this.websites[x].name = website.name;
-                this.websites[x].description = website.description;
-                return this.websites[x];
-            }
-        }
+        return this.http.put(this.baseUrl + '/api/website/' + websiteId, website)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WebsiteService.prototype.deleteWebsite = function (websiteId) {
-        for (var x = 0; x < this.websites.length; x++) {
-            if (this.websites[x]._id === websiteId) {
-                this.websites.splice(x, 1);
-                return true;
-            }
-        }
+        return this.http.delete(this.baseUrl + '/api/website/' + websiteId)
+            .map(function (response) {
+            return {};
+        });
     };
     return WebsiteService;
 }());
 WebsiteService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])()
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], WebsiteService);
 
+var _a;
 //# sourceMappingURL=website.service.client.js.map
 
 /***/ }),
