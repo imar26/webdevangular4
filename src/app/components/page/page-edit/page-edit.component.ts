@@ -24,20 +24,27 @@ export class PageEditComponent implements OnInit {
       }
     );
 
-    this.page = this.pageService.findPageById(this.pageId);
+    this.pageService.findPageById(this.pageId)
+      .subscribe((page) => {
+        this.page = page;
+      });
   }
 
   update(page) {
-    let updatePage = this.pageService.updatePage(this.pageId, page);
-    if(updatePage) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/']);
-    }
+    this.pageService.updatePage(this.pageId, page)
+      .subscribe((updatePage) => {
+        if(updatePage) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/']);
+        }
+      });    
   }
 
   delete(pageId) {
-    let deletedPage = this.pageService.deletePage(pageId);
-    if(deletedPage) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/']);
-    }
+    this.pageService.deletePage(pageId)
+      .subscribe((deletedPage) => {
+        if(deletedPage) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/']);
+        }
+      });    
   }
 }

@@ -18,13 +18,13 @@
             <div class="grid-x grid-padding-x">
               <div class="large-12 cell">
                 <label>Name</label>
-                <input type="text" placeholder="Blog Post" [(ngModel)]="page.name" name="name" />
+                <input type="text" placeholder="Blog Post" [ngModel]="page?.name" (ngModelChange)="page.name = $event" name="name" />
               </div>
             </div>
             <div class="grid-x grid-padding-x">
               <div class="large-12 cell">
                 <label>Description</label>
-                <textarea rows="3" [(ngModel)]="page.description" name="description"></textarea>
+                <textarea rows="3" [ngModel]="page?.description" (ngModelChange)="page.description = $event" name="description"></textarea>
               </div>
             </div>
             <div class="grid-x grid-padding-x">

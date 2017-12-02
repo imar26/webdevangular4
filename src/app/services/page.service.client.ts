@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 @Injectable()
 
 export class PageService {
+	constructor(private http: Http) {}
+	baseUrl = environment.baseUrl;
+	
 	pages = [
 	  	{ "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
 	  	{ "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
@@ -23,47 +26,37 @@ export class PageService {
 	};
 
 	createPage(websiteId: string, page: any) {
-		let length = this.pages.length;
-		page._id = (length + 1).toString();
-		page.websiteId = websiteId;
-		this.pages.push(page);
-		return page;
+		return this.http.post(this.baseUrl + '/api/website/' + websiteId + '/page', page)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
-	findPageByWebsiteId(websiteId: string) {
-		let pagesList = [];
-		for (let x=0; x < this.pages.length; x++) {
-			if(this.pages[x].websiteId === websiteId) {
-				pagesList.push(this.pages[x]);
-			}
-		}
-		return pagesList;
+	findPageByWebsiteId(websiteId: string) {		
+		return this.http.get(this.baseUrl + '/api/website/' + websiteId + '/page')
+		.map((response: Response) => {
+			return response.json();
+		});
 	}
 
 	findPageById(pageId: string) {
-		for (let x=0; x < this.pages.length; x++) {
-			if(this.pages[x]._id === pageId) {
-				return this.pages[x];
-			}
-		}
+		return this.http.get(this.baseUrl + '/api/page/' + pageId)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
 	updatePage(pageId: string, page: any) {
-		for (let x=0; x < this.pages.length; x++) {
-			if(this.pages[x]._id === pageId) {
-				this.pages[x].name = page.name;
-				this.pages[x].description = page.description;
-			}
-			return this.pages[x];
-		}
+		return this.http.put(this.baseUrl + '/api/page/' + pageId, page)
+			.map((response: Response) => {
+				return response.json();
+			});
 	}
 
 	deletePage(pageId: string) {
-		for (let x=0; x < this.pages.length; x++) {
-			if(this.pages[x]._id === pageId) {
-				this.pages.splice(x,1);
-				return true;
-			}
-		}
+		return this.http.delete(this.baseUrl + '/api/page/' + pageId)
+			.map((response: Response) => {
+				return {};
+			});
 	}
 }

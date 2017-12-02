@@ -35,10 +35,12 @@ export class PageNewComponent implements OnInit {
     this.page['name'] = this.name;
     this.page['description'] = this.description;
 
-    let page = this.pageService.createPage(this.websiteId, this.page);
-    if(page) {
-      this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/']);
-    }
+    this.pageService.createPage(this.websiteId, this.page)
+      .subscribe((page) => {
+        if(page) {
+          this.router.navigate(['/user/'+this.userId+'/website/'+this.websiteId+'/page/']);
+        }
+      });    
   }
 
 }
