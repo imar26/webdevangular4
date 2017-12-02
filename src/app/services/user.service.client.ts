@@ -9,12 +9,6 @@ import { environment } from '../../environments/environment';
 export class UserService {
 	constructor(private http: Http){}
 	baseUrl = environment.baseUrl;
-	users = [
-		{_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder", email: ""  },
-		{_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley", email: ""  },
-		{_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia", email: ""  },
-		{_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi", email: "" }
-    ];
 	api = {
 		'createUser': this.createUser,
 		'findUserById' : this.findUserById,

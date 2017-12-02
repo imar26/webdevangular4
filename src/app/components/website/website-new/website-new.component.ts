@@ -37,12 +37,14 @@ export class WebsiteNewComponent implements OnInit {
     this.website['name'] = this.name;
     this.website['description'] = this.description;
 
-    let website = this.websiteService.createWebsite(this.userId, this.website);
-    if(website) {
-      this.router.navigate(['/user/'+this.userId+'/website/']);
-    } else {
-      this.errorFlag = true;
-    }
+    this.websiteService.createWebsite(this.userId, this.website)
+      .subscribe((website) => {
+        if(website) {
+          this.router.navigate(['/user/'+this.userId+'/website/']);
+        } else {
+          this.errorFlag = true;
+        }
+      });
   }
 
 }

@@ -22,10 +22,16 @@ export class WebsiteListComponent implements OnInit {
       }
     );
 
-    this.websites = this.websiteService.findWebsitesByUser(this.userId);
-    if(this.websites) {
-      this.user = this.userService.findUserById(this.userId);      
-    }
+    this.websiteService.findWebsitesByUser(this.userId)
+      .subscribe((websites) => {
+        this.websites = websites;
+        if(this.websites) {
+          this.userService.findUserById(this.userId)
+            .subscribe((user) => {
+              this.user = user;
+            });      
+        }
+      });
   }
 
 }

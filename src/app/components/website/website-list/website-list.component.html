@@ -43,7 +43,7 @@
               <p>{{website.createdOn | date:'shortDate'}}</p>
             </div>
             <div class="large-3 cell">
-              <p>{{user.firstName}} {{user.lastName}}</p>
+              <p>{{user?.firstName}} {{user?.lastName}}</p>
             </div>
             <div class="large-3 cell clearfix text-right">
               <a routerLink="/user/{{website.developerId}}/website/{{website._id}}"><i class="fa fa-cog" aria-hidden="true"></i></a>
