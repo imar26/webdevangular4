@@ -41,6 +41,9 @@ import { WebsiteService } from './services/website.service.client';
 import { PageService } from './services/page.service.client';
 import { WidgetService } from './services/widget.service.client';
 
+// Directives
+import { SortableDirective } from './directives/sortable.directive';
+
 @NgModule({
   // Declare components here
   declarations: [
@@ -70,7 +73,8 @@ import { WidgetService } from './services/widget.service.client';
     WidgetImageNewComponent,
     WidgetYoutubeNewComponent,
     WidgetHtmlNewComponent,
-    WidgetHtmlComponent
+    WidgetHtmlComponent,
+    SortableDirective
   ],
   imports: [
     BrowserModule,

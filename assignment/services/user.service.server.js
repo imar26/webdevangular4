@@ -80,11 +80,12 @@ module.exports = function(app) {
     
     function deleteUser(req, res) {
         var userId = req.params.userId;
-        for (let x=0; x < users.length; x++) {
-			if(users[x]._id === userId) {
-				users.splice(x, 1);
-				res.sendStatus(200);
-			}
-		}
+        console.log(userId);
+        // for (let x=0; x < users.length; x++) {
+		// 	if(users[x]._id === userId) {
+		// 		users.splice(x, 1);
+		// 		res.sendStatus(200);
+		// 	}
+		// }
     }
 };

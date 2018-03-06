@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WidgetService } from '../../../services/widget.service.client';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SortableDirective } from '../../../directives/sortable.directive';
 
 @Component({
   selector: 'app-widget-list',
@@ -14,7 +15,7 @@ export class WidgetListComponent implements OnInit {
   websiteId: string;
   pageId: string;
   widgets = [{}];
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private widgetService: WidgetService, private sanitizer: DomSanitizer) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private widgetService: WidgetService, private sanitizer: DomSanitizer, private sortableDirective: SortableDirective) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(
@@ -30,5 +31,7 @@ export class WidgetListComponent implements OnInit {
         this.widgets = widgets;
       });
   }
+
+  // this.sortableDirective.activatedRoute
 
 }
